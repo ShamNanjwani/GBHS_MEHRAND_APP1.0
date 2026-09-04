@@ -9,6 +9,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col font-sans">
 
+    <!-- HEADER SECTION -->
     <header class="bg-emerald-800 text-white p-4 shadow-md">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
@@ -31,6 +32,7 @@
         </div>
     </header>
 
+    <!-- NAVIGATION BAR -->
     <nav class="bg-emerald-900 text-white sticky top-0 z-50 shadow">
         <div class="container mx-auto flex flex-wrap justify-between items-center p-3 text-sm font-semibold">
             <div class="flex flex-wrap gap-4">
@@ -48,15 +50,17 @@
         </div>
     </nav>
 
+    <!-- MAIN CONTAINER -->
     <main class="container mx-auto px-4 py-8 flex-grow">
 
+        <!-- ================= PUBLIC SECTION ================= -->
         <div id="section-public" class="space-y-12">
-            
             <div class="bg-emerald-50 border border-emerald-200 p-3 rounded text-xs text-emerald-900 font-bold flex justify-between items-center">
                 <span><i class="fa-solid fa-shield-halved mr-2 text-emerald-700"></i>Official Sindh Education Department Registration</span>
                 <span>SEMIS CODE: 406020752</span>
             </div>
 
+            <!-- Leadership & Announcements -->
             <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-4">
                     <h2 class="text-2xl font-bold border-b-2 border-emerald-800 pb-2">School Leadership</h2>
@@ -83,172 +87,188 @@
                     <p class="text-sm text-yellow-800 font-semibold">Admissions Open for Session 2026! Apply online via the Student Portal.</p>
                 </div>
             </section>
-
-            <section class="space-y-4">
-                <h2 class="text-2xl font-bold border-b-2 border-emerald-800 pb-2">Campus Gallery</h2>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                    <img src="https://via.placeholder.com/150" class="rounded shadow object-cover w-full h-32">
-                    <img src="https://via.placeholder.com/150" class="rounded shadow object-cover w-full h-32">
-                    <img src="https://via.placeholder.com/150" class="rounded shadow object-cover w-full h-32">
-                    <img src="https://via.placeholder.com/150" class="rounded shadow object-cover w-full h-32">
-                    <img src="https://via.placeholder.com/150" class="rounded shadow object-cover w-full h-32">
-                </div>
-            </section>
-
-            <section class="space-y-4">
-                <h2 class="text-2xl font-bold border-b-2 border-emerald-800 pb-2">Faculty Members</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-white p-4 rounded shadow border text-center">
-                        <img src="https://via.placeholder.com/80" class="w-16 h-16 rounded-full mx-auto mb-2">
-                        <h3 class="font-bold text-sm">Ghanshamdas Jest</h3>
-                        <p class="text-xs text-emerald-700 font-semibold">Mathematics Specialist</p>
-                        <p class="text-xs text-gray-500">M.Sc, B.Ed</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="grid md:grid-cols-2 gap-6 border-t pt-6">
-                <div class="bg-white p-6 rounded shadow border">
-                    <h3 class="text-xl font-semibold mb-2 text-emerald-800">Vision</h3>
-                    <p class="text-sm text-gray-600">To empower students in Rural Sindh through quality education, ethics, and modern learning tools.</p>
-                </div>
-                <div class="bg-white p-6 rounded shadow border">
-                    <h3 class="text-xl font-semibold mb-2 text-emerald-800">Mission</h3>
-                    <p class="text-sm text-gray-600">Equipping students from ECCE to Grade 10 with strong foundation knowledge and ethical values under official SEMIS Code 406020752.</p>
-                </div>
-            </section>
         </div>
 
+        <!-- ================= TEACHER PORTAL ================= -->
         <div id="section-teacher" class="hidden max-w-4xl mx-auto space-y-6">
             <div id="teacher-reg-step" class="bg-white p-6 rounded-lg shadow border space-y-4">
                 <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Teacher Registration</h2>
                 <form onsubmit="handleTeacherReg(event)" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Full Name" required class="border p-2 rounded text-sm">
-                        <input type="text" placeholder="Father Name" required class="border p-2 rounded text-sm">
+                        <input type="text" id="t-name" placeholder="Full Name" required class="border p-2 rounded text-sm">
+                        <input type="text" id="t-fname" placeholder="Father Name" required class="border p-2 rounded text-sm">
                         <input type="text" pattern="[0-9]+" placeholder="PID (Numbers Only)" required class="border p-2 rounded text-sm">
                         <input type="text" placeholder="CNIC (00000-0000000-0)" required class="border p-2 rounded text-sm">
-                        <input type="text" placeholder="DOB (DD/MM/YYYY)" required class="border p-2 rounded text-sm">
-                        <input type="text" placeholder="Contact (0000-0000000)" required class="border p-2 rounded text-sm">
                         <input type="email" placeholder="Email Address" required class="border p-2 rounded text-sm">
                         <input type="password" id="t-pass" placeholder="Password (Min 8 char, No., @/#)" required class="border p-2 rounded text-sm">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 border-t pt-3">
-                        <div>
-                            <label class="block text-xs font-bold mb-1">Profile Picture</label>
-                            <input type="file" required class="text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1">CNIC Both Sides</label>
-                            <input type="file" required class="text-xs">
-                        </div>
                     </div>
                     <button type="submit" class="w-full bg-emerald-700 text-white py-2 rounded font-semibold text-sm">Submit Registration</button>
                 </form>
             </div>
-
             <div id="teacher-dashboard" class="hidden bg-white p-6 rounded-lg shadow border space-y-6">
-                <div class="flex justify-between items-center border-b pb-2">
-                    <h2 class="text-xl font-bold text-emerald-800">Teacher Workspace</h2>
-                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded font-bold">Approved</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <button class="bg-emerald-50 border border-emerald-200 p-4 rounded text-left hover:bg-emerald-100">
-                        <h3 class="font-bold text-sm text-emerald-800">View Timetable</h3>
-                        <p class="text-xs text-gray-500">Classes: ECCE to 10</p>
-                    </button>
-                    <button class="bg-emerald-50 border border-emerald-200 p-4 rounded text-left hover:bg-emerald-100">
-                        <h3 class="font-bold text-sm text-emerald-800">Mark Attendance</h3>
-                        <p class="text-xs text-gray-500">Daily Student Sheets</p>
-                    </button>
-                    <button class="bg-emerald-50 border border-emerald-200 p-4 rounded text-left hover:bg-emerald-100">
-                        <h3 class="font-bold text-sm text-emerald-800">Approve Student Leaves</h3>
-                        <p class="text-xs text-gray-500">2 Pending Requests</p>
-                    </button>
-                </div>
+                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Teacher Workspace</h2>
+                <p class="text-xs text-gray-600">Your profile is currently under review or fully managed by Central Admin.</p>
             </div>
         </div>
 
+        <!-- ================= STUDENT PORTAL ================= -->
         <div id="section-student" class="hidden max-w-4xl mx-auto space-y-6">
             <div id="student-auth-step" class="bg-white p-6 rounded-lg shadow border space-y-4">
-                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Student Admission & Access</h2>
+                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Student Admission Form</h2>
                 <form onsubmit="handleStudentAuth(event)" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Full Name" required class="border p-2 rounded text-sm">
-                        <input type="text" placeholder="Father Name" required class="border p-2 rounded text-sm">
-                        <input type="text" placeholder="B-Form No. / Email" required class="border p-2 rounded text-sm">
-                        <select required class="border p-2 rounded text-sm">
+                        <input type="text" id="s-name" placeholder="Full Name" required class="border p-2 rounded text-sm">
+                        <input type="text" id="s-fname" placeholder="Father Name" required class="border p-2 rounded text-sm">
+                        <input type="text" placeholder="B-Form No. / CNIC" required class="border p-2 rounded text-sm">
+                        <select id="s-class" required class="border p-2 rounded text-sm">
                             <option value="">Select Target Class</option>
-                            <option>ECCE</option><option>Class 1</option><option>Class 5</option><option>Class 9</option><option>Class 10</option>
+                            <option>ECCE</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option>
+                            <option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
                         </select>
-                        <input type="text" placeholder="Phone No." required class="border p-2 rounded text-sm">
-                        <input type="text" placeholder="Emergency Contact" required class="border p-2 rounded text-sm">
                     </div>
-                    <div class="grid grid-cols-3 gap-2 border-t pt-3">
-                        <div>
-                            <label class="block text-xs font-bold mb-1">Profile Photo</label>
-                            <input type="file" required class="text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1">B-Form / CNIC</label>
-                            <input type="file" required class="text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1">Leaving Cert (Cl 2-9)</label>
-                            <input type="file" class="text-xs">
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-emerald-700 text-white py-2 rounded font-semibold text-sm">Submit Application</button>
+                    <button type="submit" class="w-full bg-emerald-700 text-white py-2 rounded font-semibold text-sm">Submit Admission Request</button>
                 </form>
             </div>
-
             <div id="student-dashboard" class="hidden bg-white p-6 rounded-lg shadow border space-y-6">
-                <div class="flex justify-between items-center border-b pb-2">
-                    <h2 class="text-xl font-bold text-emerald-800">Student Dashboard</h2>
-                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-bold">GR-1045</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-5 rounded-lg shadow relative border-2 border-yellow-400">
-                        <div class="flex justify-between border-b border-emerald-600 pb-2 mb-3">
-                            <span class="text-xs text-yellow-300 font-bold">GBHS MEHRAND</span>
-                            <span class="text-[10px] bg-yellow-400 text-black px-1.5 py-0.5 rounded font-bold">SEMIS: 406020752</span>
-                        </div>
-                        <h3 class="text-lg font-bold">Muhammad Usman</h3>
-                        <p class="text-xs text-emerald-200">Father: Ali Nawaz</p>
-                        <p class="text-xs text-emerald-200">Class: 9 | Enrollment: ENR-2026-9042</p>
-                    </div>
-
-                    <div class="bg-gray-50 border p-4 rounded-lg space-y-2">
-                        <h3 class="font-bold text-sm">Actions</h3>
-                        <button onclick="alert('Leaving Certificate Request Submitted to Admin')" class="bg-amber-600 text-white text-xs px-3 py-1.5 rounded">Apply for Leaving Certificate</button>
-                    </div>
-                </div>
+                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Student Workspace</h2>
+                <p class="text-xs text-gray-600">Your admission application is currently queued for Central Admin approval.</p>
             </div>
         </div>
 
+        <!-- ================= ADMIN PORTAL ================= -->
         <div id="section-admin" class="hidden space-y-6">
-            <h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Central Admin Control Panel</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-4 rounded shadow border space-y-3">
-                    <h3 class="font-bold text-sm text-slate-800">Student Admissions</h3>
-                    <p class="text-xs text-gray-500">Approve/Reject requests & assign GR & Enrollment IDs.</p>
-                    <button onclick="alert('Student Approved! Issued GR-1046 & Enrollment Card under SEMIS 406020752.')" class="bg-green-600 text-white px-3 py-1 rounded text-xs">Approve Pending (1)</button>
+            
+            <!-- ADMIN AUTHENTICATION PANEL -->
+            <div id="admin-auth-panel" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md border space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-2 flex justify-between items-center">
+                    <span>Admin Portal Access</span>
+                    <i class="fa-solid fa-user-gear text-slate-600"></i>
+                </h2>
+
+                <!-- Registration Form (Disabled after setup) -->
+                <div id="admin-register-box" class="space-y-3">
+                    <p class="text-xs text-amber-700 bg-amber-50 p-2 rounded font-semibold">Initial Setup: Register primary administrator credentials.</p>
+                    <input type="text" id="reg-admin-user" placeholder="Create Admin Username" class="w-full border p-2 rounded text-sm">
+                    <input type="password" id="reg-admin-pass" placeholder="Create Admin Password" class="w-full border p-2 rounded text-sm">
+                    <button onclick="registerAdmin()" class="w-full bg-slate-800 text-white py-2 rounded font-bold text-sm">Register Administrator</button>
                 </div>
-                <div class="bg-white p-4 rounded shadow border space-y-3">
-                    <h3 class="font-bold text-sm text-slate-800">Teacher Approvals</h3>
-                    <p class="text-xs text-gray-500">Review teacher credentials & assign timetables.</p>
-                    <button onclick="alert('Teacher Approved!')" class="bg-green-600 text-white px-3 py-1 rounded text-xs">Approve Registration</button>
+
+                <!-- Login Form -->
+                <div id="admin-login-box" class="hidden space-y-3">
+                    <p class="text-xs text-emerald-700 bg-emerald-50 p-2 rounded font-semibold">Enter your credentials to access central controls.</p>
+                    <input type="text" id="login-admin-user" placeholder="Admin Username" class="w-full border p-2 rounded text-sm">
+                    <input type="password" id="login-admin-pass" placeholder="Admin Password" class="w-full border p-2 rounded text-sm">
+                    <button onclick="loginAdmin()" class="w-full bg-emerald-700 text-white py-2 rounded font-bold text-sm">Login to Admin Control</button>
                 </div>
-                <div class="bg-white p-4 rounded shadow border space-y-3">
-                    <h3 class="font-bold text-sm text-slate-800">Certificates & CMS</h3>
-                    <p class="text-xs text-gray-500">Issue Leaving Certificates (SLC) and update site gallery/logo.</p>
-                    <button onclick="alert('SLC Template Generated with SEMIS Code 406020752!')" class="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Generate SLC</button>
+            </div>
+
+            <!-- ADMIN DASHBOARD (PROTECTED) -->
+            <div id="admin-dashboard-panel" class="hidden space-y-8">
+                
+                <!-- Admin Bar -->
+                <div class="bg-slate-900 text-white p-4 rounded-lg flex justify-between items-center">
+                    <div>
+                        <h2 class="text-lg font-bold">Central Control Dashboard</h2>
+                        <p class="text-xs text-slate-400">SEMIS Code: 406020752 | Master Control Active</p>
+                    </div>
+                    <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded text-xs font-bold transition">Logout Admin</button>
                 </div>
+
+                <!-- 1. STUDENT ADMISSIONS & CREDENTIALS MANAGEMENT -->
+                <section class="bg-white p-6 rounded-lg shadow border space-y-4">
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-user-graduate mr-2 text-emerald-700"></i>Student Admissions & Documents Queue</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 border-b">
+                                    <th class="p-2 border">Student Name</th>
+                                    <th class="p-2 border">Father Name</th>
+                                    <th class="p-2 border">Class</th>
+                                    <th class="p-2 border">Status</th>
+                                    <th class="p-2 border">GR Number</th>
+                                    <th class="p-2 border">Enrollment No.</th>
+                                    <th class="p-2 border">Actions / Documents</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-student-table">
+                                <!-- Dynamic Rendered Student Row -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Dynamic ID & Enrollment Document Preview Modal Target -->
+                <section id="document-generator-output" class="hidden bg-slate-50 border-2 border-dashed border-slate-300 p-6 rounded-lg space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 flex justify-between items-center">
+                        <span><i class="fa-solid fa-id-card mr-2 text-indigo-700"></i>Document Preview & Generator Center</span>
+                        <button onclick="document.getElementById('document-generator-output').classList.add('hidden')" class="text-xs text-red-600 font-bold">Close Preview</button>
+                    </h3>
+                    <div id="document-card-container" class="flex flex-wrap gap-6 justify-center">
+                        <!-- Cards Rendered via JS -->
+                    </div>
+                </section>
+
+                <!-- 2. TEACHER REGISTRATION, TIMETABLE & ATTENDANCE MANAGEMENT -->
+                <section class="bg-white p-6 rounded-lg shadow border space-y-4">
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-chalkboard-user mr-2 text-emerald-700"></i>Teacher Operations & Timetables (ECCE to Grade 10)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 border-b">
+                                    <th class="p-2 border">Teacher Name</th>
+                                    <th class="p-2 border">Father Name</th>
+                                    <th class="p-2 border">Status</th>
+                                    <th class="p-2 border">Assigned Class (ECCE-10)</th>
+                                    <th class="p-2 border">Attendance Marking</th>
+                                    <th class="p-2 border">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-teacher-table">
+                                <!-- Dynamic Rendered Teacher Row -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3. SCHOOL LEAVING CERTIFICATE (SLC) GENERATOR & UPLOADER -->
+                <section class="bg-white p-6 rounded-lg shadow border space-y-4">
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-file-signature mr-2 text-amber-700"></i>School Leaving Certificate (SLC) Center</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Option A: AI Generated Format -->
+                        <div class="border p-4 rounded bg-amber-50/50 space-y-3">
+                            <h4 class="font-bold text-xs text-amber-900 uppercase tracking-wide">Option 1: Auto / AI Generated SLC Template</h4>
+                            <p class="text-xs text-gray-600">Instantly builds an official digital leaving certificate with SEMIS code verification.</p>
+                            <div class="space-y-2">
+                                <input type="text" id="slc-student-name" placeholder="Student Full Name" class="w-full border p-1.5 rounded text-xs">
+                                <input type="text" id="slc-gr-no" placeholder="GR Number" class="w-full border p-1.5 rounded text-xs">
+                                <input type="text" id="slc-reason" placeholder="Reason for Leaving (e.g., Session Complete)" class="w-full border p-1.5 rounded text-xs">
+                                <button onclick="generateAISLC()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded text-xs font-bold w-full">Generate Digital SLC</button>
+                            </div>
+                        </div>
+
+                        <!-- Option B: Manual Upload Format -->
+                        <div class="border p-4 rounded bg-slate-50 space-y-3">
+                            <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide">Option 2: Admin Manual Upload SLC</h4>
+                            <p class="text-xs text-gray-600">Upload a pre-signed physical certificate scan or PDF for official record keeping.</p>
+                            <div class="space-y-2">
+                                <input type="file" id="slc-manual-file" class="w-full text-xs">
+                                <button onclick="uploadManualSLC()" class="bg-slate-700 hover:bg-slate-800 text-white px-3 py-1.5 rounded text-xs font-bold w-full">Upload Signed Certificate</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Generated Certificate View Target -->
+                    <div id="slc-output-box" class="hidden border-2 border-amber-300 p-6 rounded bg-white space-y-4">
+                        <!-- Certificate injected via JS -->
+                    </div>
+                </section>
+
             </div>
         </div>
 
     </main>
 
+    <!-- FOOTER -->
     <footer class="bg-gray-900 text-white py-6 mt-12 border-t border-gray-800">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 text-sm">
             <div class="flex items-center gap-3">
@@ -262,7 +282,24 @@
         </div>
     </footer>
 
+    <!-- INTERACTIVE VIEW CONTROLLER & APPLICATION LOGIC -->
     <script>
+        // Data Stores
+        let adminAccount = JSON.parse(localStorage.getItem('gbhs_admin_cred')) || null;
+        let studentsList = JSON.parse(localStorage.getItem('gbhs_students')) || [
+            { id: 1, name: "Muhammad Usman", fname: "Ali Nawaz", class: "Class 9", status: "Pending", gr: "", enrollment: "" }
+        ];
+        let teachersList = JSON.parse(localStorage.getItem('gbhs_teachers')) || [
+            { id: 1, name: "Ghanshamdas Jest", fname: "Mukesh Kumar", status: "Pending", assignedClass: "Class 9", attendance: "Not Marked" }
+        ];
+
+        // Init Setup Checks
+        window.onload = function() {
+            checkAdminAuthState();
+            renderStudentTable();
+            renderTeacherTable();
+        };
+
         function switchView(viewName) {
             document.getElementById('section-public').classList.add('hidden');
             document.getElementById('section-teacher').classList.add('hidden');
@@ -275,6 +312,188 @@
             if(viewName === 'admin-portal') document.getElementById('section-admin').classList.remove('hidden');
         }
 
+        // ================= ADMIN CREDENTIAL CONTROL =================
+        function checkAdminAuthState() {
+            const regBox = document.getElementById('admin-register-box');
+            const loginBox = document.getElementById('admin-login-box');
+            const authPanel = document.getElementById('admin-auth-panel');
+            const dashboardPanel = document.getElementById('admin-dashboard-panel');
+
+            if (adminAccount) {
+                // If registered: disable/hide registration permanently
+                regBox.classList.add('hidden');
+                loginBox.classList.remove('hidden');
+            } else {
+                regBox.classList.remove('hidden');
+                loginBox.classList.add('hidden');
+            }
+
+            if (sessionStorage.getItem('gbhs_admin_logged') === 'true') {
+                authPanel.classList.add('hidden');
+                dashboardPanel.classList.remove('hidden');
+            } else {
+                authPanel.classList.remove('hidden');
+                dashboardPanel.classList.add('hidden');
+            }
+        }
+
+        function registerAdmin() {
+            const user = document.getElementById('reg-admin-user').value.trim();
+            const pass = document.getElementById('reg-admin-pass').value.trim();
+            if (!user || !pass) { alert('Please fill in both fields.'); return; }
+
+            adminAccount = { username: user, password: pass };
+            localStorage.setItem('gbhs_admin_cred', JSON.stringify(adminAccount));
+            alert('Admin Registration Complete! You can now log in using your credentials.');
+            checkAdminAuthState();
+        }
+
+        function loginAdmin() {
+            const user = document.getElementById('login-admin-user').value.trim();
+            const pass = document.getElementById('login-admin-pass').value.trim();
+
+            if (adminAccount && user === adminAccount.username && pass === adminAccount.password) {
+                sessionStorage.setItem('gbhs_admin_logged', 'true');
+                checkAdminAuthState();
+            } else {
+                alert('Invalid Admin Credentials!');
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('gbhs_admin_logged');
+            checkAdminAuthState();
+        }
+
+        // ================= STUDENT MANAGEMENT =================
+        function handleStudentAuth(e) {
+            e.preventDefault();
+            const sName = document.getElementById('s-name').value;
+            const sFname = document.getElementById('s-fname').value;
+            const sClass = document.getElementById('s-class').value;
+
+            const newStudent = {
+                id: Date.now(),
+                name: sName,
+                fname: sFname,
+                class: sClass,
+                status: "Pending",
+                gr: "",
+                enrollment: ""
+            };
+            studentsList.push(newStudent);
+            localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
+            renderStudentTable();
+            
+            document.getElementById('student-auth-step').classList.add('hidden');
+            document.getElementById('student-dashboard').classList.remove('hidden');
+        }
+
+        function renderStudentTable() {
+            const tbody = document.getElementById('admin-student-table');
+            tbody.innerHTML = '';
+            studentsList.forEach(s => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-2 border font-bold">${s.name}</td>
+                        <td class="p-2 border">${s.fname}</td>
+                        <td class="p-2 border">${s.class}</td>
+                        <td class="p-2 border"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${s.status === 'Approved' ? 'bg-green-100 text-green-800' : s.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${s.status}</span></td>
+                        <td class="p-2 border font-mono">${s.gr || '-'}</td>
+                        <td class="p-2 border font-mono">${s.enrollment || '-'}</td>
+                        <td class="p-2 border space-x-1">
+                            <button onclick="approveStudent(${s.id})" class="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold">Approve</button>
+                            <button onclick="rejectStudent(${s.id})" class="bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold">Reject</button>
+                            <button onclick="editStudent(${s.id})" class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-bold">Edit</button>
+                            ${s.status === 'Approved' ? `<button onclick="generateStudentCards(${s.id})" class="bg-indigo-600 text-white px-2 py-1 rounded text-[10px] font-bold">Cards/Templates</button>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function approveStudent(id) {
+            studentsList = studentsList.map(s => {
+                if(s.id === id) {
+                    s.status = 'Approved';
+                    s.gr = s.gr || 'GR-' + Math.floor(1000 + Math.random() * 9000);
+                    s.enrollment = s.enrollment || 'ENR-2026-' + Math.floor(100 + Math.random() * 900);
+                }
+                return s;
+            });
+            localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
+            renderStudentTable();
+        }
+
+        function rejectStudent(id) {
+            studentsList = studentsList.map(s => { if(s.id === id) s.status = 'Rejected'; return s; });
+            localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
+            renderStudentTable();
+        }
+
+        function editStudent(id) {
+            const student = studentsList.find(s => s.id === id);
+            if (!student) return;
+            const newName = prompt("Edit Student Name:", student.name);
+            const newClass = prompt("Edit Class (ECCE - 10):", student.class);
+            if (newName && newClass) {
+                student.name = newName;
+                student.class = newClass;
+                localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
+                renderStudentTable();
+            }
+        }
+
+        function generateStudentCards(id) {
+            const student = studentsList.find(s => s.id === id);
+            const output = document.getElementById('document-generator-output');
+            const container = document.getElementById('document-card-container');
+            output.classList.remove('hidden');
+
+            container.innerHTML = `
+                <!-- Generated Official ID Card -->
+                <div class="w-80 bg-gradient-to-r from-emerald-800 to-emerald-900 text-white p-4 rounded-xl shadow-lg border-2 border-yellow-400 space-y-2">
+                    <div class="flex justify-between items-center border-b border-emerald-600 pb-1">
+                        <span class="text-[10px] text-yellow-300 font-bold">OFFICIAL STUDENT ID</span>
+                        <span class="text-[9px] bg-yellow-400 text-black px-1 rounded font-bold">SEMIS: 406020752</span>
+                    </div>
+                    <div class="flex gap-3 items-center">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-emerald-900 font-bold text-xl">
+                            ${student.name.charAt(0)}
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm leading-tight">${student.name}</h4>
+                            <p class="text-[10px] text-emerald-200">S/O: ${student.fname}</p>
+                            <p class="text-[10px] text-yellow-300 font-bold">Class: ${student.class}</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-emerald-700 pt-1 flex justify-between text-[9px] font-mono">
+                        <span>GR: ${student.gr}</span>
+                        <span>ENR: ${student.enrollment}</span>
+                    </div>
+                </div>
+
+                <!-- Generated Official Enrollment Card -->
+                <div class="w-80 bg-white border-2 border-slate-800 p-4 rounded-xl shadow-lg space-y-2 text-slate-800">
+                    <div class="text-center border-b pb-1">
+                        <h4 class="font-bold text-xs uppercase tracking-wider">GBHS Mehrand Enrollment Card</h4>
+                        <p class="text-[9px] text-gray-500">Government of Sindh Education Dept.</p>
+                    </div>
+                    <div class="text-[11px] space-y-1">
+                        <p><strong>Student:</strong> ${student.name}</p>
+                        <p><strong>GR No:</strong> <span class="font-mono font-bold">${student.gr}</span></p>
+                        <p><strong>Enrollment ID:</strong> <span class="font-mono font-bold">${student.enrollment}</span></p>
+                        <p><strong>Registered Class:</strong> ${student.class}</p>
+                    </div>
+                    <div class="text-[8px] text-gray-400 border-t pt-1 flex justify-between">
+                        <span>Verified: Admin Office</span>
+                        <span>SEMIS: 406020752</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ================= TEACHER MANAGEMENT =================
         function handleTeacherReg(e) {
             e.preventDefault();
             const pass = document.getElementById('t-pass').value;
@@ -282,14 +501,131 @@
                 alert('Password must be min 8 chars, contain numbers and @ or #');
                 return;
             }
+            const tName = document.getElementById('t-name').value;
+            const tFname = document.getElementById('t-fname').value;
+
+            teachersList.push({
+                id: Date.now(),
+                name: tName,
+                fname: tFname,
+                status: "Pending",
+                assignedClass: "Unassigned",
+                attendance: "Not Marked"
+            });
+            localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
+            renderTeacherTable();
+
             document.getElementById('teacher-reg-step').classList.add('hidden');
             document.getElementById('teacher-dashboard').classList.remove('hidden');
         }
 
-        function handleStudentAuth(e) {
-            e.preventDefault();
-            document.getElementById('student-auth-step').classList.add('hidden');
-            document.getElementById('student-dashboard').classList.remove('hidden');
+        function renderTeacherTable() {
+            const tbody = document.getElementById('admin-teacher-table');
+            tbody.innerHTML = '';
+            teachersList.forEach(t => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-2 border font-bold">${t.name}</td>
+                        <td class="p-2 border">${t.fname}</td>
+                        <td class="p-2 border"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.status === 'Approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${t.status}</span></td>
+                        <td class="p-2 border font-bold text-emerald-800">${t.assignedClass}</td>
+                        <td class="p-2 border">
+                            <button onclick="toggleAttendance(${t.id})" class="px-2 py-0.5 rounded text-[10px] font-bold ${t.attendance === 'Present' ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-700'}">
+                                ${t.attendance}
+                            </button>
+                        </td>
+                        <td class="p-2 border space-x-1">
+                            <button onclick="approveTeacher(${t.id})" class="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold">Approve</button>
+                            <button onclick="rejectTeacher(${t.id})" class="bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold">Reject</button>
+                            <button onclick="assignTimetable(${t.id})" class="bg-amber-600 text-white px-2 py-1 rounded text-[10px] font-bold">Assign Class</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function approveTeacher(id) {
+            teachersList = teachersList.map(t => { if(t.id === id) t.status = 'Approved'; return t; });
+            localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
+            renderTeacherTable();
+        }
+
+        function rejectTeacher(id) {
+            teachersList = teachersList.map(t => { if(t.id === id) t.status = 'Rejected'; return t; });
+            localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
+            renderTeacherTable();
+        }
+
+        function assignTimetable(id) {
+            const teacher = teachersList.find(t => t.id === id);
+            if(!teacher) return;
+            const targetClass = prompt("Assign Class Timetable (Select: ECCE, Class 1, 2, 3, 4, 5, 6, 7, 8, 9, 10):", teacher.assignedClass);
+            if(targetClass) {
+                teacher.assignedClass = targetClass;
+                localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
+                renderTeacherTable();
+            }
+        }
+
+        function toggleAttendance(id) {
+            teachersList = teachersList.map(t => {
+                if(t.id === id) {
+                    t.attendance = (t.attendance === 'Present') ? 'Absent' : 'Present';
+                }
+                return t;
+            });
+            localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
+            renderTeacherTable();
+        }
+
+        // ================= SCHOOL LEAVING CERTIFICATE (SLC) =================
+        function generateAISLC() {
+            const name = document.getElementById('slc-student-name').value;
+            const gr = document.getElementById('slc-gr-no').value;
+            const reason = document.getElementById('slc-reason').value;
+
+            if(!name || !gr) { alert("Please enter Student Name and GR Number."); return; }
+
+            const outputBox = document.getElementById('slc-output-box');
+            outputBox.classList.remove('hidden');
+            outputBox.innerHTML = `
+                <div class="border-4 border-double border-emerald-800 p-6 text-center space-y-4">
+                    <div class="border-b pb-2">
+                        <h2 class="text-xl font-bold text-emerald-900">GOVERNMENT BOYS HIGH SCHOOL MEHRAND</h2>
+                        <p class="text-xs text-gray-600">Taluka Kaloi, District Tharparkar | SEMIS Code: 406020752</p>
+                        <h3 class="text-sm font-bold tracking-widest text-amber-800 mt-2 uppercase">Official School Leaving Certificate</h3>
+                    </div>
+                    <p class="text-xs text-left leading-relaxed">
+                        This is to certify that <strong>${name}</strong>, holding GR Number <strong class="font-mono">${gr}</strong>, 
+                        has been a student of Government Boys High School Mehrand. The student has left the institution due to the following reason: 
+                        <em>${reason || "Completion of academic session"}</em>. Character and conduct during stay were satisfactory.
+                    </p>
+                    <div class="flex justify-between items-end pt-8 text-xs font-bold">
+                        <div>
+                            <p class="border-t border-black px-4 pt-1">Date of Issue</p>
+                        </div>
+                        <div>
+                            <p class="border-t border-black px-4 pt-1">Headmaster Signature & Stamp</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function uploadManualSLC() {
+            const fileInput = document.getElementById('slc-manual-file');
+            if(fileInput.files.length === 0) {
+                alert("Please select a physical certificate file to upload.");
+                return;
+            }
+            const outputBox = document.getElementById('slc-output-box');
+            outputBox.classList.remove('hidden');
+            outputBox.innerHTML = `
+                <div class="p-4 bg-green-50 border border-green-300 rounded text-xs text-green-900">
+                    <p class="font-bold"><i class="fa-solid fa-circle-check mr-2"></i>Signed SLC Document Uploaded Successfully!</p>
+                    <p class="text-gray-600 mt-1">File Name: ${fileInput.files[0].name} (Archived in Admin Records under SEMIS 406020752)</p>
+                </div>
+            `;
         }
     </script>
 </body>
