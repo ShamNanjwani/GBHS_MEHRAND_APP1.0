@@ -61,7 +61,6 @@
                 <span>SEMIS CODE: 406020752</span>
             </div>
 
-            <!-- Dynamic Leadership & Messages -->
             <section class="space-y-4">
                 <h2 class="text-2xl font-bold border-b-2 border-emerald-800 pb-2">School Leadership</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -107,7 +106,6 @@
             <div id="teacher-dashboard" class="hidden bg-white p-6 rounded-lg shadow border space-y-6">
                 <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Teacher Workspace & Leave Status</h2>
                 
-                <!-- Leave Application Form -->
                 <div class="bg-slate-50 p-4 rounded border space-y-3">
                     <h3 class="font-bold text-sm text-slate-800">Apply for Casual / Sick Leave</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -121,7 +119,6 @@
                     <button onclick="submitTeacherLeave()" class="bg-emerald-700 text-white text-xs px-4 py-2 rounded font-bold">Submit Leave Request</button>
                 </div>
 
-                <!-- Teacher Leave Applications Tracking -->
                 <div class="space-y-2">
                     <h3 class="font-bold text-sm text-slate-800">Your Submitted Requests</h3>
                     <div class="overflow-x-auto">
@@ -135,9 +132,7 @@
                                     <th class="p-2 border">HM Signature / Remarks</th>
                                 </tr>
                             </thead>
-                            <tbody id="teacher-leave-tbody">
-                                <!-- Dynamic Render -->
-                            </tbody>
+                            <tbody id="teacher-leave-tbody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -171,7 +166,6 @@
         <!-- ================= ADMIN PORTAL ================= -->
         <div id="section-admin" class="hidden space-y-6">
             
-            <!-- ADMIN AUTHENTICATION PANEL -->
             <div id="admin-auth-panel" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md border space-y-4">
                 <h2 class="text-xl font-bold text-slate-800 border-b pb-2 flex justify-between items-center">
                     <span>Admin Portal Access</span>
@@ -206,41 +200,56 @@
 
                 <!-- PUBLIC MEDIA & LEADERSHIP MANAGEMENT -->
                 <section class="bg-white p-6 rounded-lg shadow border space-y-4">
-                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-pen-to-square mr-2 text-indigo-700"></i>Leadership & Media Management</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-pen-to-square mr-2 text-indigo-700"></i>Leadership, Logo & Designer Media Control</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <!-- Minister -->
                         <div class="p-3 border rounded bg-slate-50 space-y-2">
                             <h4 class="font-bold text-xs text-slate-800">Honorable Minister</h4>
                             <input type="text" id="edit-minister-name" placeholder="Name" class="w-full border p-1 rounded text-xs">
                             <input type="text" id="edit-minister-msg" placeholder="Message" class="w-full border p-1 rounded text-xs">
-                            <input type="file" id="edit-minister-img" class="text-[10px] w-full">
+                            <input type="file" id="edit-minister-img" class="text-[10px] w-full" accept="image/*">
                         </div>
+
+                        <!-- Secretary -->
                         <div class="p-3 border rounded bg-slate-50 space-y-2">
                             <h4 class="font-bold text-xs text-slate-800">Secretary Education</h4>
                             <input type="text" id="edit-secretary-name" placeholder="Name" class="w-full border p-1 rounded text-xs">
                             <input type="text" id="edit-secretary-msg" placeholder="Message" class="w-full border p-1 rounded text-xs">
-                            <input type="file" id="edit-secretary-img" class="text-[10px] w-full">
+                            <input type="file" id="edit-secretary-img" class="text-[10px] w-full" accept="image/*">
                         </div>
+
+                        <!-- Headmaster -->
                         <div class="p-3 border rounded bg-slate-50 space-y-2">
                             <h4 class="font-bold text-xs text-slate-800">Headmaster</h4>
                             <input type="text" id="edit-hm-name" placeholder="Name" class="w-full border p-1 rounded text-xs">
                             <input type="text" id="edit-hm-msg" placeholder="Message" class="w-full border p-1 rounded text-xs">
-                            <input type="file" id="edit-hm-img" class="text-[10px] w-full">
+                            <input type="file" id="edit-hm-img" class="text-[10px] w-full" accept="image/*">
                         </div>
-                        <div class="p-3 border rounded bg-slate-50 space-y-2">
-                            <h4 class="font-bold text-xs text-slate-800">Designer & Logo</h4>
+
+                        <!-- Logo Upload Section (Header Image Only) -->
+                        <div class="p-3 border rounded bg-emerald-50 space-y-2">
+                            <h4 class="font-bold text-xs text-emerald-900"><i class="fa-solid fa-school mr-1"></i>School Logo Upload</h4>
+                            <p class="text-[10px] text-gray-500">Displays beside school name in Header</p>
+                            <input type="file" id="edit-logo-file" class="text-[10px] w-full" accept="image/*">
+                        </div>
+
+                        <!-- Designer Picture & Name Upload (Footer Only) -->
+                        <div class="p-3 border rounded bg-yellow-50 space-y-2">
+                            <h4 class="font-bold text-xs text-yellow-900"><i class="fa-solid fa-paintbrush mr-1"></i>Designer Profile</h4>
+                            <p class="text-[10px] text-gray-500">Displays beside "Designed By" in Footer</p>
                             <input type="text" id="edit-designer-name" placeholder="Designer Name" class="w-full border p-1 rounded text-xs">
-                            <label class="block text-[10px] font-bold text-gray-500">School Logo Upload</label>
-                            <input type="file" id="edit-logo-img" class="text-[10px] w-full">
+                            <input type="file" id="edit-designer-file" class="text-[10px] w-full" accept="image/*">
                         </div>
                     </div>
-                    <button onclick="saveLeadershipMedia()" class="bg-indigo-700 text-white text-xs px-4 py-2 rounded font-bold">Save Public Section Updates</button>
+
+                    <button onclick="saveLeadershipMedia()" class="bg-indigo-700 hover:bg-indigo-800 text-white text-xs px-4 py-2 rounded font-bold transition">Save & Apply All Media Updates</button>
                 </section>
 
                 <!-- STUDENT MANAGEMENT & ATTENDANCE GRAPH -->
                 <section class="bg-white p-6 rounded-lg shadow border space-y-6">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-user-graduate mr-2 text-emerald-700"></i>Student Information & Attendance Tracking</h3>
                     
-                    <!-- Attendance Visual Analytics -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-slate-50 p-4 rounded border">
                         <div class="md:col-span-1 h-48 flex justify-center">
                             <canvas id="studentAttendanceChart"></canvas>
@@ -270,9 +279,7 @@
                                     <th class="p-2 border">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-student-table">
-                                <!-- Dynamic Rendered Student Row -->
-                            </tbody>
+                            <tbody id="admin-student-table"></tbody>
                         </table>
                     </div>
                 </section>
@@ -281,7 +288,6 @@
                 <section class="bg-white p-6 rounded-lg shadow border space-y-6">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-chalkboard-user mr-2 text-emerald-700"></i>Teacher Management & Leave Processing</h3>
                     
-                    <!-- Teacher Table -->
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs">
                             <thead>
@@ -295,13 +301,10 @@
                                     <th class="p-2 border">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-teacher-table">
-                                <!-- Dynamic Render -->
-                            </tbody>
+                            <tbody id="admin-teacher-table"></tbody>
                         </table>
                     </div>
 
-                    <!-- Teacher Leaves Processing Queue -->
                     <div class="border-t pt-4 space-y-3">
                         <h4 class="font-bold text-sm text-slate-800">Teacher Leave Applications Queue</h4>
                         <div class="overflow-x-auto">
@@ -316,9 +319,7 @@
                                         <th class="p-2 border">Decision Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="admin-leave-tbody">
-                                    <!-- Dynamic Leaves -->
-                                </tbody>
+                                <tbody id="admin-leave-tbody"></tbody>
                             </table>
                         </div>
                     </div>
@@ -333,7 +334,7 @@
     <footer class="bg-gray-900 text-white py-6 mt-12 border-t border-gray-800">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 text-sm">
             <div class="flex items-center gap-3">
-                <img id="footer-designer-img" src="https://via.placeholder.com/40" alt="Designer" class="w-10 h-10 rounded-full border border-yellow-400 object-cover">
+                <img id="footer-designer-img" src="https://via.placeholder.com/40" alt="Designer Avatar" class="w-10 h-10 rounded-full border-2 border-yellow-400 object-cover bg-white">
                 <span>Designed By: <strong id="footer-designer-name">GHANSHAMDAS JEST</strong></span>
             </div>
             <div class="text-center md:text-right">
@@ -343,15 +344,14 @@
         </div>
     </footer>
 
-    <!-- INTERACTIVE VIEW CONTROLLER & APPLICATION LOGIC -->
+    <!-- LOGIC SCRIPT -->
     <script>
-        // Data Stores
         let adminAccount = JSON.parse(localStorage.getItem('gbhs_admin_cred')) || null;
         let leadershipData = JSON.parse(localStorage.getItem('gbhs_leadership')) || {
             ministerName: "Honorable Minister", ministerMsg: "Dedicated to spreading literacy across Tharparkar.", ministerImg: "https://via.placeholder.com/100",
             secretaryName: "Secretary Education", secretaryMsg: "Ensuring equal academic standards for rural students.", secretaryImg: "https://via.placeholder.com/100",
             hmName: "Headmaster", hmMsg: "Welcome to Government Boys High School Mehrand.", hmImg: "https://via.placeholder.com/100",
-            designerName: "GHANSHAMDAS JEST", logoImg: "https://via.placeholder.com/80"
+            designerName: "GHANSHAMDAS JEST", designerImg: "https://via.placeholder.com/40", logoImg: "https://via.placeholder.com/80"
         };
 
         let studentsList = JSON.parse(localStorage.getItem('gbhs_students')) || [
@@ -364,7 +364,6 @@
         ];
 
         let leavesList = JSON.parse(localStorage.getItem('gbhs_leaves')) || [];
-
         let attendanceChart = null;
 
         window.onload = function() {
@@ -388,7 +387,7 @@
             if(viewName === 'admin-portal') document.getElementById('section-admin').classList.remove('hidden');
         }
 
-        // ================= LEADERSHIP & MEDIA MANAGEMENT =================
+        // ================= MEDIA & LEADERSHIP MANAGEMENT =================
         function renderLeadership() {
             document.getElementById('view-minister-name').innerText = leadershipData.ministerName;
             document.getElementById('view-minister-msg').innerText = `"${leadershipData.ministerMsg}"`;
@@ -402,8 +401,10 @@
             document.getElementById('view-hm-msg').innerText = `"${leadershipData.hmMsg}"`;
             document.getElementById('view-hm-img').src = leadershipData.hmImg;
 
-            document.getElementById('footer-designer-name').innerText = leadershipData.designerName;
+            // Updated Target Bindings
             document.getElementById('header-logo').src = leadershipData.logoImg;
+            document.getElementById('footer-designer-name').innerText = leadershipData.designerName;
+            document.getElementById('footer-designer-img').src = leadershipData.designerImg;
         }
 
         function saveLeadershipMedia() {
@@ -423,12 +424,50 @@
             if (hmMsg) leadershipData.hmMsg = hmMsg;
             if (dName) leadershipData.designerName = dName;
 
-            localStorage.setItem('gbhs_leadership', JSON.stringify(leadershipData));
-            renderLeadership();
-            alert("Public Section & Leadership Data Updated!");
+            // Handle Image Upload File Readers
+            const logoFileInput = document.getElementById('edit-logo-file');
+            const designerFileInput = document.getElementById('edit-designer-file');
+            const mFileInput = document.getElementById('edit-minister-img');
+            const sFileInput = document.getElementById('edit-secretary-img');
+            const hmFileInput = document.getElementById('edit-hm-img');
+
+            let readsPending = 0;
+
+            function checkDone() {
+                readsPending--;
+                if(readsPending <= 0) {
+                    localStorage.setItem('gbhs_leadership', JSON.stringify(leadershipData));
+                    renderLeadership();
+                    alert("Media & Leadership Details Updated Successfully!");
+                }
+            }
+
+            const processFile = (input, key) => {
+                if (input && input.files && input.files[0]) {
+                    readsPending++;
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        leadershipData[key] = e.target.result;
+                        checkDone();
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            };
+
+            processFile(logoFileInput, 'logoImg');
+            processFile(designerFileInput, 'designerImg');
+            processFile(mFileInput, 'ministerImg');
+            processFile(sFileInput, 'secretaryImg');
+            processFile(hmFileInput, 'hmImg');
+
+            if (readsPending === 0) {
+                localStorage.setItem('gbhs_leadership', JSON.stringify(leadershipData));
+                renderLeadership();
+                alert("Text Fields Updated Successfully!");
+            }
         }
 
-        // ================= ADMIN AUTHENTICATION =================
+        // ================= AUTHENTICATION =================
         function checkAdminAuthState() {
             const regBox = document.getElementById('admin-register-box');
             const loginBox = document.getElementById('admin-login-box');
@@ -480,7 +519,7 @@
             checkAdminAuthState();
         }
 
-        // ================= STUDENT MANAGEMENT & GRAPH =================
+        // ================= STUDENTS & CHART =================
         function handleStudentAuth(e) {
             e.preventDefault();
             const sName = document.getElementById('s-name').value;
@@ -599,7 +638,7 @@
             }
         }
 
-        // ================= TEACHER OPERATIONS & LEAVE APPROVAL =================
+        // ================= TEACHERS & LEAVES =================
         function handleTeacherReg(e) {
             e.preventDefault();
             const pass = document.getElementById('t-pass').value;
@@ -680,7 +719,6 @@
             }
         }
 
-        // ================= TEACHER LEAVE SYSTEM =================
         function submitTeacherLeave() {
             const type = document.getElementById('t-leave-type').value;
             const date = document.getElementById('t-leave-date').value;
@@ -705,7 +743,6 @@
             if(teacherTbody) teacherTbody.innerHTML = '';
 
             leavesList.forEach(l => {
-                // Render Admin Queue
                 if(adminTbody) {
                     adminTbody.innerHTML += `
                         <tr class="border-b hover:bg-slate-50">
@@ -726,7 +763,6 @@
                     `;
                 }
 
-                // Render Teacher View
                 if(teacherTbody) {
                     teacherTbody.innerHTML += `
                         <tr class="border-b">
