@@ -14,7 +14,10 @@
     <header class="bg-emerald-800 text-white p-4 shadow-md">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
-                <img id="header-logo" src="https://via.placeholder.com/80" alt="School Logo" class="h-17 w-17 object-contain bg-white rounded-full p-1 border">
+                <!-- Fixed Logo Container ensuring any image fits inside -->
+                <div class="w-16 h-16 bg-white rounded-full p-1 border flex items-center justify-center overflow-hidden shrink-0">
+                    <img id="header-logo" src="https://via.placeholder.com/80" alt="School Logo" class="max-w-full max-h-full object-contain">
+                </div>
                 <div>
                     <h1 class="text-xl md:text-2xl font-bold tracking-wide">GOVERNMENT BOYS HIGH SCHOOL MEHRAND</h1>
                     <p class="text-xs text-yellow-300 font-semibold tracking-wider">SEMIS CODE: 406020752</p>
@@ -334,7 +337,10 @@
     <footer class="bg-gray-900 text-white py-6 mt-12 border-t border-gray-800">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 text-sm">
             <div class="flex items-center gap-3">
-                <img id="footer-designer-img" src="https://via.placeholder.com/40" alt="Designer Avatar" class="w-10 h-10 rounded-full border-2 border-yellow-400 object-cover bg-white">
+                <!-- Fixed Designer Avatar Container ensuring any image fits inside -->
+                <div class="w-10 h-10 rounded-full border-2 border-yellow-400 bg-white overflow-hidden flex items-center justify-center shrink-0">
+                    <img id="footer-designer-img" src="https://via.placeholder.com/40" alt="Designer Avatar" class="w-full h-full object-cover">
+                </div>
                 <span>Designed By: <strong id="footer-designer-name">GHANSHAMDAS JEST</strong></span>
             </div>
             <div class="text-center md:text-right">
