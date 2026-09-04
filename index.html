@@ -6,15 +6,15 @@
     <title>GOVERNMENT BOYS HIGH SCHOOL MEHRAND (SEMIS: 406020752)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col font-sans">
 
-    <!-- HEADER SECTION -->
     <header class="bg-emerald-800 text-white p-4 shadow-md">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
-                <!-- Circular Logo Container auto-fitting uploaded images -->
                 <div class="w-16 h-16 bg-white rounded-full p-1 border-2 border-yellow-400 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
                     <img id="header-logo" src="https://via.placeholder.com/80" alt="School Logo" class="w-full h-full object-contain rounded-full">
                 </div>
@@ -36,7 +36,6 @@
         </div>
     </header>
 
-    <!-- NAVIGATION BAR -->
     <nav class="bg-emerald-900 text-white sticky top-0 z-50 shadow">
         <div class="container mx-auto flex flex-wrap justify-between items-center p-3 text-sm font-semibold">
             <div class="flex flex-wrap gap-4">
@@ -44,7 +43,6 @@
                 <button onclick="switchView('public')" class="hover:text-yellow-400 transition">FACULTY</button>
                 <button onclick="switchView('student-portal')" class="hover:text-yellow-400 transition">ADMISSION</button>
                 <button onclick="switchView('public')" class="hover:text-yellow-400 transition">ABOUT US</button>
-                <button onclick="switchView('public')" class="hover:text-yellow-400 transition">CONTACT US</button>
             </div>
             <div class="flex gap-2 text-xs">
                 <button onclick="switchView('student-portal')" class="bg-yellow-500 text-black px-3 py-1 rounded font-bold hover:bg-yellow-400">Student Portal</button>
@@ -54,10 +52,8 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTAINER -->
     <main class="container mx-auto px-4 py-8 flex-grow">
 
-        <!-- ================= PUBLIC SECTION ================= -->
         <div id="section-public" class="space-y-12">
             <div class="bg-emerald-50 border border-emerald-200 p-3 rounded text-xs text-emerald-900 font-bold flex justify-between items-center">
                 <span><i class="fa-solid fa-shield-halved mr-2 text-emerald-700"></i>Official Sindh Education Department Registration</span>
@@ -89,84 +85,146 @@
             </section>
         </div>
 
-        <!-- ================= TEACHER PORTAL ================= -->
-        <div id="section-teacher" class="hidden max-w-4xl mx-auto space-y-6">
-            <div id="teacher-reg-step" class="bg-white p-6 rounded-lg shadow border space-y-4">
-                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Teacher Registration / Access</h2>
-                <form onsubmit="handleTeacherReg(event)" class="space-y-4">
+        <div id="section-student" class="max-w-4xl mx-auto space-y-6">
+            
+            <div id="student-auth-container" class="bg-white p-6 rounded-lg shadow border space-y-4">
+                <div class="flex border-b text-sm font-bold">
+                    <button onclick="showStudentAuthTab('register')" id="tab-btn-reg" class="py-2 px-4 border-b-2 border-emerald-700 text-emerald-800">Student Register</button>
+                    <button onclick="showStudentAuthTab('login')" id="tab-btn-login" class="py-2 px-4 text-gray-500">Student Login</button>
+                </div>
+
+                <form id="student-reg-form" onsubmit="handleStudentRegisterStep1(event)" class="space-y-4">
+                    <h3 class="text-base font-bold text-slate-800">Step 1: Account Creation</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" id="t-name" placeholder="Full Name" required class="border p-2 rounded text-sm">
-                        <input type="text" id="t-fname" placeholder="Father Name" required class="border p-2 rounded text-sm">
-                        <input type="text" pattern="[0-9]+" placeholder="PID (Numbers Only)" required class="border p-2 rounded text-sm">
-                        <input type="text" placeholder="CNIC (00000-0000000-0)" required class="border p-2 rounded text-sm">
-                        <input type="email" placeholder="Email Address" required class="border p-2 rounded text-sm">
-                        <input type="password" id="t-pass" placeholder="Password (Min 8 char, No., @/#)" required class="border p-2 rounded text-sm">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">CNIC / B-Form Number *</label>
+                            <input type="text" id="reg-s-cnic" pattern="^[0-9]{5}-[0-9]{7}-[0-9]{1}$" placeholder="00000-0000000-0" required class="w-full border p-2 rounded text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Email Address *</label>
+                            <input type="email" id="reg-s-email" placeholder="student@example.com" required class="w-full border p-2 rounded text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Mobile Phone No *</label>
+                            <input type="tel" id="reg-s-phone" placeholder="03001234567" required class="w-full border p-2 rounded text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Password (Min 8 chars: Letters, Numbers, Special Char) *</label>
+                            <input type="password" id="reg-s-pass" required class="w-full border p-2 rounded text-sm">
+                        </div>
                     </div>
-                    <button type="submit" class="w-full bg-emerald-700 text-white py-2 rounded font-semibold text-sm">Submit / Login</button>
+                    <button type="submit" class="w-full bg-emerald-700 text-white py-2 rounded font-bold text-sm hover:bg-emerald-800">Register & Continue to Admission Details</button>
+                </form>
+
+                <form id="student-login-form" onsubmit="handleStudentLogin(event)" class="hidden space-y-4">
+                    <h3 class="text-base font-bold text-slate-800">Student Access Login</h3>
+                    <div class="space-y-3 max-w-md">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">CNIC / B-Form No *</label>
+                            <input type="text" id="login-s-cnic" placeholder="00000-0000000-0" required class="w-full border p-2 rounded text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Password *</label>
+                            <input type="password" id="login-s-pass" required class="w-full border p-2 rounded text-sm">
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-700 text-white py-2 rounded font-bold text-sm hover:bg-emerald-800">Login to Dashboard</button>
+                    </div>
                 </form>
             </div>
 
-            <div id="teacher-dashboard" class="hidden bg-white p-6 rounded-lg shadow border space-y-6">
-                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Teacher Workspace & Leave Status</h2>
-                
-                <div class="bg-slate-50 p-4 rounded border space-y-3">
-                    <h3 class="font-bold text-sm text-slate-800">Apply for Casual / Sick Leave</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <select id="t-leave-type" class="border p-2 rounded text-xs">
-                            <option value="Casual Leave">Casual Leave</option>
-                            <option value="Sick Leave">Sick Leave</option>
-                        </select>
-                        <input type="date" id="t-leave-date" class="border p-2 rounded text-xs">
-                        <input type="text" id="t-leave-reason" placeholder="Reason for Leave" class="border p-2 rounded text-xs">
-                    </div>
-                    <button onclick="submitTeacherLeave()" class="bg-emerald-700 text-white text-xs px-4 py-2 rounded font-bold">Submit Leave Request</button>
-                </div>
-
-                <div class="space-y-2">
-                    <h3 class="font-bold text-sm text-slate-800">Your Submitted Requests</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead>
-                                <tr class="bg-slate-100 border-b">
-                                    <th class="p-2 border">Type</th>
-                                    <th class="p-2 border">Date</th>
-                                    <th class="p-2 border">Reason</th>
-                                    <th class="p-2 border">Status</th>
-                                    <th class="p-2 border">HM Signature / Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody id="teacher-leave-tbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= STUDENT PORTAL ================= -->
-        <div id="section-student" class="hidden max-w-4xl mx-auto space-y-6">
-            <div id="student-auth-step" class="bg-white p-6 rounded-lg shadow border space-y-4">
-                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Student Admission Form</h2>
-                <form onsubmit="handleStudentAuth(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" id="s-name" placeholder="Full Name" required class="border p-2 rounded text-sm">
-                        <input type="text" id="s-fname" placeholder="Father Name" required class="border p-2 rounded text-sm">
-                        <input type="text" id="s-bform" placeholder="B-Form No. / CNIC" required class="border p-2 rounded text-sm">
-                        <select id="s-class" required class="border p-2 rounded text-sm">
-                            <option value="">Select Target Class</option>
-                            <option>ECCE</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option>
-                            <option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="w-full bg-emerald-700 text-white py-2 rounded font-semibold text-sm">Submit Admission Request</button>
-                </form>
-            </div>
             <div id="student-dashboard" class="hidden bg-white p-6 rounded-lg shadow border space-y-6">
-                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Student Workspace</h2>
-                <p class="text-xs text-gray-600">Your admission application is currently queued for Central Admin approval.</p>
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-emerald-800">Student Portal Dashboard</h2>
+                        <p class="text-xs text-gray-500">GBHS Mehrand Student Records System</p>
+                    </div>
+                    <button onclick="logoutStudent()" class="bg-red-600 text-white px-3 py-1 rounded text-xs font-bold">Logout</button>
+                </div>
+
+                <div id="student-status-banner" class="p-4 rounded-lg font-bold text-sm"></div>
+
+                <div id="student-cards-section" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <div id="printable-id-card" class="bg-gradient-to-br from-emerald-800 to-emerald-950 text-white p-5 rounded-xl shadow-lg border-2 border-yellow-400 relative space-y-4">
+                            <div class="flex items-center justify-between border-b border-emerald-600 pb-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center p-0.5">
+                                        <img src="https://via.placeholder.com/80" class="max-w-full max-h-full object-contain">
+                                    </div>
+                                    <div>
+                                        <h4 class="text-[10px] font-bold tracking-wider text-yellow-300">GBHS MEHRAND</h4>
+                                        <p class="text-[8px] text-emerald-200">STUDENT IDENTITY CARD</p>
+                                    </div>
+                                </div>
+                                <span class="text-[9px] bg-yellow-400 text-black font-extrabold px-1.5 py-0.5 rounded" id="card-gr">GR: -</span>
+                            </div>
+
+                            <div class="flex gap-4 items-center">
+                                <img id="card-photo" src="" class="w-20 h-20 rounded-lg object-cover border-2 border-white bg-slate-200">
+                                <div class="text-xs space-y-1">
+                                    <p class="font-bold text-sm text-yellow-300" id="card-fullname">-</p>
+                                    <p class="text-emerald-100"><span class="text-emerald-300 font-semibold">Father:</span> <span id="card-fname">-</span></p>
+                                    <p class="text-emerald-100"><span class="text-emerald-300 font-semibold">Class:</span> <span id="card-class">-</span></p>
+                                    <p class="text-emerald-100"><span class="text-emerald-300 font-semibold">B-Form/CNIC:</span> <span id="card-cnic" class="font-mono text-[10px]">-</span></p>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-emerald-600 pt-2 flex justify-between items-center text-[8px] text-emerald-200">
+                                <span>SEMIS: 406020752</span>
+                                <span>Authorized Principal Sign</span>
+                            </div>
+                        </div>
+
+                        <div id="printable-enrollment-card" class="bg-white text-slate-800 p-5 rounded-xl shadow-lg border-2 border-emerald-700 space-y-4">
+                            <div class="text-center border-b pb-2">
+                                <h4 class="text-xs font-bold text-emerald-800">GOVERNMENT BOYS HIGH SCHOOL MEHRAND</h4>
+                                <p class="text-[9px] text-gray-500 font-bold">OFFICIAL ADMISSION & ENROLLMENT CERTIFICATE</p>
+                            </div>
+
+                            <div class="text-xs space-y-2">
+                                <div class="flex justify-between bg-slate-50 p-2 rounded border">
+                                    <span class="font-semibold text-gray-600">Enrollment No:</span>
+                                    <span id="card-enrollment-no" class="font-bold text-emerald-800">-</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-1">
+                                    <span class="text-gray-600">Student Name:</span>
+                                    <span id="card-enr-name" class="font-bold">-</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-1">
+                                    <span class="text-gray-600">Enrolled Class:</span>
+                                    <span id="card-enr-class" class="font-bold">-</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-1">
+                                    <span class="text-gray-600">Issue Date:</span>
+                                    <span class="font-bold">September 2026</span>
+                                </div>
+                            </div>
+
+                            <p class="text-[9px] text-gray-400 italic text-center">This document verifies active enrollment in GBHS Mehrand District Tharparkar.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <button onclick="downloadPDF('printable-id-card', 'Student_ID_Card.pdf')" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs px-4 py-2 rounded font-bold shadow flex items-center gap-2">
+                            <i class="fa-solid fa-download"></i> Download ID Card (PDF)
+                        </button>
+                        <button onclick="downloadPDF('printable-enrollment-card', 'Enrollment_Card.pdf')" class="bg-indigo-700 hover:bg-indigo-800 text-white text-xs px-4 py-2 rounded font-bold shadow flex items-center gap-2">
+                            <i class="fa-solid fa-file-pdf"></i> Download Enrollment Card (PDF)
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- ================= ADMIN PORTAL ================= -->
+        <div id="section-teacher" class="hidden max-w-4xl mx-auto space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow border space-y-4">
+                <h2 class="text-xl font-bold text-emerald-800 border-b pb-2">Teacher Access Workspace</h2>
+                <p class="text-xs text-gray-600">Please contact School Admin for teacher credentials assignment.</p>
+            </div>
+        </div>
+
         <div id="section-admin" class="hidden space-y-6">
             
             <div id="admin-auth-panel" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md border space-y-4">
@@ -190,7 +248,6 @@
                 </div>
             </div>
 
-            <!-- ADMIN DASHBOARD (PROTECTED) -->
             <div id="admin-dashboard-panel" class="hidden space-y-8">
                 
                 <div class="bg-slate-900 text-white p-4 rounded-lg flex justify-between items-center">
@@ -201,73 +258,42 @@
                     <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded text-xs font-bold transition">Logout Admin</button>
                 </div>
 
-                <!-- PUBLIC MEDIA & LEADERSHIP MANAGEMENT -->
                 <section class="bg-white p-6 rounded-lg shadow border space-y-4">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-pen-to-square mr-2 text-indigo-700"></i>Leadership, Logo & Designer Media Control</h3>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                        <!-- Minister -->
                         <div class="p-3 border rounded bg-slate-50 space-y-2">
                             <h4 class="font-bold text-xs text-slate-800">Honorable Minister</h4>
                             <input type="text" id="edit-minister-name" placeholder="Name" class="w-full border p-1 rounded text-xs">
                             <input type="text" id="edit-minister-msg" placeholder="Message" class="w-full border p-1 rounded text-xs">
                             <input type="file" id="edit-minister-img" class="text-[10px] w-full" accept="image/*">
                         </div>
-
-                        <!-- Secretary -->
                         <div class="p-3 border rounded bg-slate-50 space-y-2">
                             <h4 class="font-bold text-xs text-slate-800">Secretary Education</h4>
                             <input type="text" id="edit-secretary-name" placeholder="Name" class="w-full border p-1 rounded text-xs">
                             <input type="text" id="edit-secretary-msg" placeholder="Message" class="w-full border p-1 rounded text-xs">
                             <input type="file" id="edit-secretary-img" class="text-[10px] w-full" accept="image/*">
                         </div>
-
-                        <!-- Headmaster -->
                         <div class="p-3 border rounded bg-slate-50 space-y-2">
                             <h4 class="font-bold text-xs text-slate-800">Headmaster</h4>
                             <input type="text" id="edit-hm-name" placeholder="Name" class="w-full border p-1 rounded text-xs">
                             <input type="text" id="edit-hm-msg" placeholder="Message" class="w-full border p-1 rounded text-xs">
                             <input type="file" id="edit-hm-img" class="text-[10px] w-full" accept="image/*">
                         </div>
-
-                        <!-- Logo Upload Section (Header Image Only) -->
                         <div class="p-3 border rounded bg-emerald-50 space-y-2">
-                            <h4 class="font-bold text-xs text-emerald-900"><i class="fa-solid fa-school mr-1"></i>School Logo Upload</h4>
-                            <p class="text-[10px] text-gray-500">Auto-fits into circular header section</p>
+                            <h4 class="font-bold text-xs text-emerald-900">School Logo Upload</h4>
                             <input type="file" id="edit-logo-file" class="text-[10px] w-full" accept="image/*">
                         </div>
-
-                        <!-- Designer Picture & Name Upload (Footer Only) -->
                         <div class="p-3 border rounded bg-yellow-50 space-y-2">
-                            <h4 class="font-bold text-xs text-yellow-900"><i class="fa-solid fa-paintbrush mr-1"></i>Designer Profile</h4>
-                            <p class="text-[10px] text-gray-500">Displays beside "Designed By" in Footer</p>
+                            <h4 class="font-bold text-xs text-yellow-900">Designer Profile</h4>
                             <input type="text" id="edit-designer-name" placeholder="Designer Name" class="w-full border p-1 rounded text-xs">
                             <input type="file" id="edit-designer-file" class="text-[10px] w-full" accept="image/*">
                         </div>
                     </div>
-
-                    <button onclick="saveLeadershipMedia()" class="bg-indigo-700 hover:bg-indigo-800 text-white text-xs px-4 py-2 rounded font-bold transition">Save & Apply All Media Updates</button>
+                    <button onclick="saveLeadershipMedia()" class="bg-indigo-700 hover:bg-indigo-800 text-white text-xs px-4 py-2 rounded font-bold">Save Media Updates</button>
                 </section>
 
-                <!-- STUDENT MANAGEMENT & ATTENDANCE GRAPH -->
                 <section class="bg-white p-6 rounded-lg shadow border space-y-6">
-                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-user-graduate mr-2 text-emerald-700"></i>Student Information & Attendance Tracking</h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-slate-50 p-4 rounded border">
-                        <div class="md:col-span-1 h-48 flex justify-center">
-                            <canvas id="studentAttendanceChart"></canvas>
-                        </div>
-                        <div class="md:col-span-2 space-y-3">
-                            <h4 class="font-bold text-sm text-slate-800">Attendance Statistics Summary</h4>
-                            <div class="flex gap-4 text-xs font-bold">
-                                <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded">Present: <span id="stat-p">0</span></span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded">Leave: <span id="stat-l">0</span></span>
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded">Absent: <span id="stat-a">0</span></span>
-                            </div>
-                            <p class="text-xs text-gray-500">Calculated across all registered students dynamically.</p>
-                        </div>
-                    </div>
-
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-user-graduate mr-2 text-emerald-700"></i>Student Admissions Queue & Approval Desk</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs">
                             <thead>
@@ -275,56 +301,14 @@
                                     <th class="p-2 border">Student Name</th>
                                     <th class="p-2 border">Father Name</th>
                                     <th class="p-2 border">Class</th>
-                                    <th class="p-2 border">B-Form / CNIC</th>
+                                    <th class="p-2 border">CNIC / B-Form</th>
                                     <th class="p-2 border">Status</th>
-                                    <th class="p-2 border">Consecutive Absences</th>
-                                    <th class="p-2 border">Mark Attendance</th>
-                                    <th class="p-2 border">Actions</th>
+                                    <th class="p-2 border">Assigned GR / Enrollment</th>
+                                    <th class="p-2 border">Verification & Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="admin-student-table"></tbody>
                         </table>
-                    </div>
-                </section>
-
-                <!-- TEACHER OPERATIONS & LEAVE APPROVAL SYSTEM -->
-                <section class="bg-white p-6 rounded-lg shadow border space-y-6">
-                    <h3 class="text-lg font-bold text-slate-800 border-b pb-2"><i class="fa-solid fa-chalkboard-user mr-2 text-emerald-700"></i>Teacher Management & Leave Processing</h3>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead>
-                                <tr class="bg-slate-100 border-b">
-                                    <th class="p-2 border">Teacher Name</th>
-                                    <th class="p-2 border">Father Name</th>
-                                    <th class="p-2 border">PID</th>
-                                    <th class="p-2 border">Class</th>
-                                    <th class="p-2 border">Status</th>
-                                    <th class="p-2 border">Daily Attendance</th>
-                                    <th class="p-2 border">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-teacher-table"></tbody>
-                        </table>
-                    </div>
-
-                    <div class="border-t pt-4 space-y-3">
-                        <h4 class="font-bold text-sm text-slate-800">Teacher Leave Applications Queue</h4>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="bg-amber-50 border-b">
-                                        <th class="p-2 border">Teacher</th>
-                                        <th class="p-2 border">Type</th>
-                                        <th class="p-2 border">Date</th>
-                                        <th class="p-2 border">Reason</th>
-                                        <th class="p-2 border">HM Sign & Stamp Upload / Remarks</th>
-                                        <th class="p-2 border">Decision Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="admin-leave-tbody"></tbody>
-                            </table>
-                        </div>
                     </div>
                 </section>
 
@@ -333,7 +317,135 @@
 
     </main>
 
-    <!-- FOOTER -->
+    <div id="student-popup-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden my-8 space-y-4">
+            <div class="bg-emerald-800 text-white p-4 flex justify-between items-center">
+                <h3 class="font-bold text-base"><i class="fa-solid fa-file-signature mr-2"></i>Step 2: Student Admission Application Details</h3>
+            </div>
+            
+            <form onsubmit="handleStudentStep2Submit(event)" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div>
+                        <label class="block font-bold mb-1">First Name *</label>
+                        <input type="text" id="popup-s-fname" required class="w-full border p-2 rounded">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">Last Name *</label>
+                        <input type="text" id="popup-s-lname" required class="w-full border p-2 rounded">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">Father Name *</label>
+                        <input type="text" id="popup-s-father" required class="w-full border p-2 rounded">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">CNIC / B-Form No (Auto-Updated)</label>
+                        <input type="text" id="popup-s-cnic" readonly class="w-full border p-2 rounded bg-gray-100 font-mono font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">Target Class *</label>
+                        <select id="popup-s-class" required class="w-full border p-2 rounded font-bold text-emerald-800">
+                            <option value="">Select Target Enrollment Class</option>
+                            <option>ECCE</option><option>Class 1</option><option>Class 2</option><option>Class 3</option>
+                            <option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option>
+                            <option>Class 8</option><option>Class 9</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">Email (Auto-Updated)</label>
+                        <input type="email" id="popup-s-email" readonly class="w-full border p-2 rounded bg-gray-100">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">Phone Number (Auto-Updated)</label>
+                        <input type="text" id="popup-s-phone" readonly class="w-full border p-2 rounded bg-gray-100">
+                    </div>
+                </div>
+
+                <div class="border-t pt-3 space-y-3">
+                    <h4 class="font-bold text-xs text-slate-800">Required Document Attachments</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-50 p-3 border rounded space-y-1">
+                            <label class="block font-bold">Student Picture * (Required)</label>
+                            <input type="file" id="popup-file-photo" accept="image/*" required class="text-[10px] w-full">
+                        </div>
+                        <div class="bg-slate-50 p-3 border rounded space-y-1">
+                            <label class="block font-bold">School Leaving Certificate</label>
+                            <p class="text-[9px] text-gray-500">Only for transferred students from other schools</p>
+                            <input type="file" id="popup-file-slc" class="text-[10px] w-full">
+                        </div>
+                        <div class="bg-slate-50 p-3 border rounded space-y-1 md:col-span-2">
+                            <label class="block font-bold">B-Form Document / Father CNIC (Both Sides)</label>
+                            <p class="text-[9px] text-gray-500">Upload B-Form or Father CNIC images</p>
+                            <input type="file" id="popup-file-bform" required class="text-[10px] w-full">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t pt-3 flex justify-end gap-3">
+                    <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2 rounded text-xs font-bold">Submit Admission Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-edit-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl p-6 space-y-4">
+            <h3 class="font-bold text-base text-slate-800 border-b pb-2">Admin Student Record Update</h3>
+            <form onsubmit="handleAdminUpdateStudent(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="admin-edit-id">
+                <div>
+                    <label class="block font-bold mb-1">First Name</label>
+                    <input type="text" id="admin-edit-fname" required class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Last Name</label>
+                    <input type="text" id="admin-edit-lname" required class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Father Name</label>
+                    <input type="text" id="admin-edit-father" required class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">CNIC / B-Form</label>
+                    <input type="text" id="admin-edit-cnic" required class="w-full border p-2 rounded font-mono">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Target Class</label>
+                    <select id="admin-edit-class" required class="w-full border p-2 rounded">
+                        <option>ECCE</option><option>Class 1</option><option>Class 2</option><option>Class 3</option>
+                        <option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option>
+                        <option>Class 8</option><option>Class 9</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAdminEditModal()" class="bg-gray-300 text-black px-4 py-1.5 rounded font-bold">Cancel</button>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-1.5 rounded font-bold">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-approve-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-xl shadow-2xl p-6 space-y-4">
+            <h3 class="font-bold text-base text-emerald-800 border-b pb-2">Approve Admission & Assign Identifiers</h3>
+            <form onsubmit="handleAdminApproveSubmit(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="approve-student-id">
+                <p class="text-gray-600">Assign official General Register (GR) and Enrollment numbers to complete approval.</p>
+                <div>
+                    <label class="block font-bold mb-1">Assign GR Number *</label>
+                    <input type="text" id="approve-s-gr" placeholder="e.g. GR-2026-104" required class="w-full border p-2 rounded font-bold">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Assign Enrollment Number *</label>
+                    <input type="text" id="approve-s-enr" placeholder="e.g. ENR-GBHS-902" required class="w-full border p-2 rounded font-bold">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAdminApproveModal()" class="bg-gray-300 text-black px-4 py-1.5 rounded font-bold">Cancel</button>
+                    <button type="submit" class="bg-emerald-700 text-white px-4 py-1.5 rounded font-bold">Confirm Approval</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <footer class="bg-gray-900 text-white py-6 mt-12 border-t border-gray-800">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 text-sm">
             <div class="flex items-center gap-3">
@@ -349,7 +461,6 @@
         </div>
     </footer>
 
-    <!-- LOGIC SCRIPT -->
     <script>
         let adminAccount = JSON.parse(localStorage.getItem('gbhs_admin_cred')) || null;
         let leadershipData = JSON.parse(localStorage.getItem('gbhs_leadership')) || {
@@ -359,25 +470,15 @@
             designerName: "GHANSHAMDAS JEST", designerImg: "https://via.placeholder.com/40", logoImg: "https://via.placeholder.com/80"
         };
 
-        let studentsList = JSON.parse(localStorage.getItem('gbhs_students')) || [
-            { id: 1, name: "Muhammad Usman", fname: "Ali Nawaz", bform: "44101-1234567-1", class: "Class 9", status: "Approved", gr: "GR-1045", enrollment: "ENR-2026-904", consecutiveAbsences: 2, attendanceState: "Absent" },
-            { id: 2, name: "Suresh Kumar", fname: "Ramesh Lal", bform: "44101-7654321-3", class: "Class 5", status: "Approved", gr: "GR-1046", enrollment: "ENR-2026-502", consecutiveAbsences: 0, attendanceState: "Present" }
-        ];
-
-        let teachersList = JSON.parse(localStorage.getItem('gbhs_teachers')) || [
-            { id: 1, name: "Ghanshamdas Jest", fname: "Mukesh Kumar", pid: "10842910", status: "Approved", assignedClass: "Class 9", attendance: "Present" }
-        ];
-
-        let leavesList = JSON.parse(localStorage.getItem('gbhs_leaves')) || [];
-        let attendanceChart = null;
+        let studentsList = JSON.parse(localStorage.getItem('gbhs_students_v2')) || [];
+        let currentStudentSession = JSON.parse(sessionStorage.getItem('gbhs_current_student')) || null;
+        let tempRegistrationData = null;
 
         window.onload = function() {
             checkAdminAuthState();
             renderLeadership();
-            renderStudentTable();
-            renderTeacherTable();
-            renderLeavesTable();
-            initChart();
+            renderAdminStudentTable();
+            checkStudentSession();
         };
 
         function switchView(viewName) {
@@ -390,6 +491,307 @@
             if(viewName === 'teacher-portal') document.getElementById('section-teacher').classList.remove('hidden');
             if(viewName === 'student-portal') document.getElementById('section-student').classList.remove('hidden');
             if(viewName === 'admin-portal') document.getElementById('section-admin').classList.remove('hidden');
+        }
+
+        // ================= STUDENT REGISTRATION & LOGIN PIPELINE =================
+        function showStudentAuthTab(tab) {
+            const regForm = document.getElementById('student-reg-form');
+            const loginForm = document.getElementById('student-login-form');
+            const btnReg = document.getElementById('tab-btn-reg');
+            const btnLogin = document.getElementById('tab-btn-login');
+
+            if (tab === 'register') {
+                regForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                btnReg.className = "py-2 px-4 border-b-2 border-emerald-700 text-emerald-800 font-bold";
+                btnLogin.className = "py-2 px-4 text-gray-500 font-bold";
+            } else {
+                regForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+                btnLogin.className = "py-2 px-4 border-b-2 border-emerald-700 text-emerald-800 font-bold";
+                btnReg.className = "py-2 px-4 text-gray-500 font-bold";
+            }
+        }
+
+        function validatePassword(pass) {
+            const minChar = pass.length >= 8;
+            const hasAlpha = /[a-zA-Z]/.test(pass);
+            const hasNum = /[0-9]/.test(pass);
+            const hasSpec = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+            return minChar && hasAlpha && hasNum && hasSpec;
+        }
+
+        function handleStudentRegisterStep1(e) {
+            e.preventDefault();
+            const cnic = document.getElementById('reg-s-cnic').value.trim();
+            const email = document.getElementById('reg-s-email').value.trim();
+            const phone = document.getElementById('reg-s-phone').value.trim();
+            const pass = document.getElementById('reg-s-pass').value;
+
+            if (!validatePassword(pass)) {
+                alert("Password format requirement failed!\nMust contain minimum 8 characters including letters, numbers, and at least one special character.");
+                return;
+            }
+
+            tempRegistrationData = { cnic, email, phone, pass };
+
+            document.getElementById('popup-s-cnic').value = cnic;
+            document.getElementById('popup-s-email').value = email;
+            document.getElementById('popup-s-phone').value = phone;
+
+            document.getElementById('student-popup-modal').classList.remove('hidden');
+        }
+
+        function handleStudentStep2Submit(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('popup-s-fname').value.trim();
+            const lastName = document.getElementById('popup-s-lname').value.trim();
+            const fatherName = document.getElementById('popup-s-father').value.trim();
+            const targetClass = document.getElementById('popup-s-class').value;
+
+            const photoFile = document.getElementById('popup-file-photo').files[0];
+            const slcFile = document.getElementById('popup-file-slc').files[0];
+            const bformFile = document.getElementById('popup-file-bform').files[0];
+
+            if (!photoFile) {
+                alert("Student Picture is mandatory!");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const photoBase64 = evt.target.result;
+
+                const newStudent = {
+                    id: Date.now(),
+                    firstName,
+                    lastName,
+                    fullName: `${firstName} ${lastName}`,
+                    fatherName,
+                    cnic: tempRegistrationData.cnic,
+                    email: tempRegistrationData.email,
+                    phone: tempRegistrationData.phone,
+                    password: tempRegistrationData.pass,
+                    targetClass,
+                    photo: photoBase64,
+                    hasSLC: !!slcFile,
+                    hasBFormDoc: !!bformFile,
+                    status: 'Pending',
+                    grNo: '',
+                    enrollmentNo: ''
+                };
+
+                studentsList.push(newStudent);
+                localStorage.setItem('gbhs_students_v2', JSON.stringify(studentsList));
+
+                currentStudentSession = newStudent;
+                sessionStorage.setItem('gbhs_current_student', JSON.stringify(newStudent));
+
+                document.getElementById('student-popup-modal').classList.add('hidden');
+                renderAdminStudentTable();
+                checkStudentSession();
+                alert("Registration details submitted! Application sent to Admin Queue.");
+            };
+            reader.readAsDataURL(photoFile);
+        }
+
+        function handleStudentLogin(e) {
+            e.preventDefault();
+            const cnic = document.getElementById('login-s-cnic').value.trim();
+            const pass = document.getElementById('login-s-pass').value;
+
+            const found = studentsList.find(s => s.cnic === cnic && s.password === pass);
+            if (found) {
+                currentStudentSession = found;
+                sessionStorage.setItem('gbhs_current_student', JSON.stringify(found));
+                checkStudentSession();
+            } else {
+                alert("Invalid CNIC or Password!");
+            }
+        }
+
+        function checkStudentSession() {
+            const authBox = document.getElementById('student-auth-container');
+            const dashBox = document.getElementById('student-dashboard');
+            const banner = document.getElementById('student-status-banner');
+            const cardsSection = document.getElementById('student-cards-section');
+
+            if (currentStudentSession) {
+                authBox.classList.add('hidden');
+                dashBox.classList.remove('hidden');
+
+                const latest = studentsList.find(s => s.id === currentStudentSession.id) || currentStudentSession;
+
+                if (latest.status === 'Pending') {
+                    banner.className = "p-4 rounded-lg font-bold text-sm bg-yellow-100 text-yellow-900 border border-yellow-300";
+                    banner.innerHTML = `<i class="fa-solid fa-clock mr-2"></i> Application Status: <strong>Pending Review</strong>. Your application is queued for Admin approval.`;
+                    cardsSection.classList.add('hidden');
+                } else if (latest.status === 'Rejected') {
+                    banner.className = "p-4 rounded-lg font-bold text-sm bg-red-100 text-red-900 border border-red-300";
+                    banner.innerHTML = `<i class="fa-solid fa-circle-xmark mr-2"></i> Application Status: <strong>Rejected</strong>. Please contact school administrative department.`;
+                    cardsSection.classList.add('hidden');
+                } else if (latest.status === 'Approved') {
+                    banner.className = "p-4 rounded-lg font-bold text-sm bg-emerald-100 text-emerald-900 border border-emerald-300";
+                    banner.innerHTML = `<i class="fa-solid fa-circle-check mr-2 text-emerald-700"></i> Congrats! You are Enrolled / Admission Confirmed.`;
+                    cardsSection.classList.remove('hidden');
+
+                    document.getElementById('card-gr').innerText = `GR: ${latest.grNo}`;
+                    document.getElementById('card-fullname').innerText = latest.fullName;
+                    document.getElementById('card-fname').innerText = latest.fatherName;
+                    document.getElementById('card-class').innerText = latest.targetClass;
+                    document.getElementById('card-cnic').innerText = latest.cnic;
+                    document.getElementById('card-photo').src = latest.photo;
+
+                    document.getElementById('card-enrollment-no').innerText = latest.enrollmentNo;
+                    document.getElementById('card-enr-name').innerText = latest.fullName;
+                    document.getElementById('card-enr-class').innerText = latest.targetClass;
+                }
+            } else {
+                authBox.classList.remove('hidden');
+                dashBox.classList.add('hidden');
+            }
+        }
+
+        function logoutStudent() {
+            sessionStorage.removeItem('gbhs_current_student');
+            currentStudentSession = null;
+            checkStudentSession();
+        }
+
+        // ================= ADMIN OPERATIONS & APPROVAL DESK =================
+        function renderAdminStudentTable() {
+            const tbody = document.getElementById('admin-student-table');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            studentsList.forEach(s => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-2 border font-bold">${s.fullName}</td>
+                        <td class="p-2 border">${s.fatherName}</td>
+                        <td class="p-2 border font-bold text-emerald-800">${s.targetClass}</td>
+                        <td class="p-2 border font-mono">${s.cnic}</td>
+                        <td class="p-2 border">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${s.status === 'Approved' ? 'bg-green-100 text-green-800' : s.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${s.status}</span>
+                        </td>
+                        <td class="p-2 border">
+                            ${s.grNo ? `<p class="font-bold text-[10px] text-emerald-800">GR: ${s.grNo}</p>` : ''}
+                            ${s.enrollmentNo ? `<p class="font-bold text-[10px] text-indigo-800">ENR: ${s.enrollmentNo}</p>` : ''}
+                        </td>
+                        <td class="p-2 border space-x-1">
+                            <button onclick="openAdminEditModal(${s.id})" class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-bold">Update / Edit</button>
+                            ${s.status !== 'Approved' ? `<button onclick="openAdminApproveModal(${s.id})" class="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold">Approve</button>` : ''}
+                            ${s.status !== 'Rejected' ? `<button onclick="rejectStudent(${s.id})" class="bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold">Reject</button>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openAdminEditModal(id) {
+            const s = studentsList.find(item => item.id === id);
+            if (!s) return;
+            document.getElementById('admin-edit-id').value = s.id;
+            document.getElementById('admin-edit-fname').value = s.firstName;
+            document.getElementById('admin-edit-lname').value = s.lastName;
+            document.getElementById('admin-edit-father').value = s.fatherName;
+            document.getElementById('admin-edit-cnic').value = s.cnic;
+            document.getElementById('admin-edit-class').value = s.targetClass;
+            document.getElementById('admin-edit-modal').classList.remove('hidden');
+        }
+
+        function closeAdminEditModal() {
+            document.getElementById('admin-edit-modal').classList.add('hidden');
+        }
+
+        function handleAdminUpdateStudent(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('admin-edit-id').value);
+            const fname = document.getElementById('admin-edit-fname').value;
+            const lname = document.getElementById('admin-edit-lname').value;
+            const father = document.getElementById('admin-edit-father').value;
+            const cnic = document.getElementById('admin-edit-cnic').value;
+            const targetClass = document.getElementById('admin-edit-class').value;
+
+            studentsList = studentsList.map(s => {
+                if (s.id === id) {
+                    s.firstName = fname;
+                    s.lastName = lname;
+                    s.fullName = `${fname} ${lname}`;
+                    s.fatherName = father;
+                    s.cnic = cnic;
+                    s.targetClass = targetClass;
+                }
+                return s;
+            });
+
+            localStorage.setItem('gbhs_students_v2', JSON.stringify(studentsList));
+            renderAdminStudentTable();
+            checkStudentSession();
+            closeAdminEditModal();
+            alert("Student information updated successfully.");
+        }
+
+        function openAdminApproveModal(id) {
+            document.getElementById('approve-student-id').value = id;
+            document.getElementById('approve-s-gr').value = `GR-${Math.floor(1000 + Math.random() * 9000)}`;
+            document.getElementById('approve-s-enr').value = `ENR-2026-${Math.floor(100 + Math.random() * 900)}`;
+            document.getElementById('admin-approve-modal').classList.remove('hidden');
+        }
+
+        function closeAdminApproveModal() {
+            document.getElementById('admin-approve-modal').classList.add('hidden');
+        }
+
+        function handleAdminApproveSubmit(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('approve-student-id').value);
+            const gr = document.getElementById('approve-s-gr').value;
+            const enr = document.getElementById('approve-s-enr').value;
+
+            studentsList = studentsList.map(s => {
+                if (s.id === id) {
+                    s.status = 'Approved';
+                    s.grNo = gr;
+                    s.enrollmentNo = enr;
+                }
+                return s;
+            });
+
+            localStorage.setItem('gbhs_students_v2', JSON.stringify(studentsList));
+            renderAdminStudentTable();
+            checkStudentSession();
+            closeAdminApproveModal();
+            alert("Student admission approved with GR & Enrollment details generated!");
+        }
+
+        function rejectStudent(id) {
+            if (confirm("Are you sure you want to reject this admission request?")) {
+                studentsList = studentsList.map(s => {
+                    if (s.id === id) s.status = 'Rejected';
+                    return s;
+                });
+                localStorage.setItem('gbhs_students_v2', JSON.stringify(studentsList));
+                renderAdminStudentTable();
+                checkStudentSession();
+            }
+        }
+
+        // ================= PDF DOWNLOAD HANDLER =================
+        function downloadPDF(elementId, filename) {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById(elementId);
+
+            html2canvas(element, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth() - 40;
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                pdf.addImage(imgData, 'PNG', 20, 20, pdfWidth, pdfHeight);
+                pdf.save(filename);
+            });
         }
 
         // ================= MEDIA & LEADERSHIP MANAGEMENT =================
@@ -470,7 +872,7 @@
             }
         }
 
-        // ================= AUTHENTICATION =================
+        // ================= ADMIN AUTHENTICATION =================
         function checkAdminAuthState() {
             const regBox = document.getElementById('admin-register-box');
             const loginBox = document.getElementById('admin-login-box');
@@ -520,301 +922,6 @@
         function logoutAdmin() {
             sessionStorage.removeItem('gbhs_admin_logged');
             checkAdminAuthState();
-        }
-
-        // ================= STUDENTS & CHART =================
-        function handleStudentAuth(e) {
-            e.preventDefault();
-            const sName = document.getElementById('s-name').value;
-            const sFname = document.getElementById('s-fname').value;
-            const sBform = document.getElementById('s-bform').value;
-            const sClass = document.getElementById('s-class').value;
-
-            studentsList.push({
-                id: Date.now(), name: sName, fname: sFname, bform: sBform, class: sClass,
-                status: "Pending", gr: "", enrollment: "", consecutiveAbsences: 0, attendanceState: "Present"
-            });
-            localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
-            renderStudentTable();
-            
-            document.getElementById('student-auth-step').classList.add('hidden');
-            document.getElementById('student-dashboard').classList.remove('hidden');
-        }
-
-        function renderStudentTable() {
-            const tbody = document.getElementById('admin-student-table');
-            tbody.innerHTML = '';
-
-            studentsList.forEach(s => {
-                const alert2Days = s.consecutiveAbsences >= 2 ? `<span class="bg-red-600 text-white font-bold px-2 py-0.5 rounded text-[9px] animate-pulse">⚠️ 2+ Days Absent</span>` : `<span class="text-gray-500">${s.consecutiveAbsences} Days</span>`;
-
-                tbody.innerHTML += `
-                    <tr class="border-b hover:bg-slate-50">
-                        <td class="p-2 border font-bold">${s.name}</td>
-                        <td class="p-2 border">${s.fname}</td>
-                        <td class="p-2 border">${s.class}</td>
-                        <td class="p-2 border font-mono">${s.bform || '-'}</td>
-                        <td class="p-2 border"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${s.status === 'Approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${s.status}</span></td>
-                        <td class="p-2 border">${alert2Days}</td>
-                        <td class="p-2 border space-x-1">
-                            <button onclick="setStudentAtt(${s.id}, 'Present')" class="px-1.5 py-0.5 rounded text-[9px] font-bold ${s.attendanceState === 'Present' ? 'bg-emerald-600 text-white' : 'bg-gray-200'}">P</button>
-                            <button onclick="setStudentAtt(${s.id}, 'Leave')" class="px-1.5 py-0.5 rounded text-[9px] font-bold ${s.attendanceState === 'Leave' ? 'bg-yellow-500 text-white' : 'bg-gray-200'}">L</button>
-                            <button onclick="setStudentAtt(${s.id}, 'Absent')" class="px-1.5 py-0.5 rounded text-[9px] font-bold ${s.attendanceState === 'Absent' ? 'bg-red-600 text-white' : 'bg-gray-200'}">A</button>
-                        </td>
-                        <td class="p-2 border space-x-1">
-                            <button onclick="editAllStudentInfo(${s.id})" class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-bold">Edit All</button>
-                            <button onclick="deleteStudent(${s.id})" class="bg-red-700 text-white px-2 py-1 rounded text-[10px] font-bold">Delete</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            updateAttendanceStats();
-        }
-
-        function setStudentAtt(id, state) {
-            studentsList = studentsList.map(s => {
-                if (s.id === id) {
-                    s.attendanceState = state;
-                    if (state === 'Absent') s.consecutiveAbsences += 1;
-                    else s.consecutiveAbsences = 0;
-                }
-                return s;
-            });
-            localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
-            renderStudentTable();
-        }
-
-        function editAllStudentInfo(id) {
-            const s = studentsList.find(item => item.id === id);
-            if (!s) return;
-
-            const name = prompt("Edit Student Name:", s.name);
-            const fname = prompt("Edit Father Name:", s.fname);
-            const bform = prompt("Edit B-Form / CNIC:", s.bform);
-            const sClass = prompt("Edit Class:", s.class);
-
-            if (name && fname && bform && sClass) {
-                s.name = name; s.fname = fname; s.bform = bform; s.class = sClass;
-                localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
-                renderStudentTable();
-            }
-        }
-
-        function deleteStudent(id) {
-            if (confirm("Are you sure you want to delete this student?")) {
-                studentsList = studentsList.filter(s => s.id !== id);
-                localStorage.setItem('gbhs_students', JSON.stringify(studentsList));
-                renderStudentTable();
-            }
-        }
-
-        function initChart() {
-            const ctx = document.getElementById('studentAttendanceChart').getContext('2d');
-            attendanceChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Present', 'Leave', 'Absent'],
-                    datasets: [{
-                        data: [0, 0, 0],
-                        backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-            updateAttendanceStats();
-        }
-
-        function updateAttendanceStats() {
-            let p = 0, l = 0, a = 0;
-            studentsList.forEach(s => {
-                if (s.attendanceState === 'Present') p++;
-                if (s.attendanceState === 'Leave') l++;
-                if (s.attendanceState === 'Absent') a++;
-            });
-            document.getElementById('stat-p').innerText = p;
-            document.getElementById('stat-l').innerText = l;
-            document.getElementById('stat-a').innerText = a;
-
-            if (attendanceChart) {
-                attendanceChart.data.datasets[0].data = [p, l, a];
-                attendanceChart.update();
-            }
-        }
-
-        // ================= TEACHERS & LEAVES =================
-        function handleTeacherReg(e) {
-            e.preventDefault();
-            const pass = document.getElementById('t-pass').value;
-            if(pass.length < 8 || !/\d/.test(pass) || !/[@#]/.test(pass)) {
-                alert('Password must be min 8 chars, contain numbers and @ or #');
-                return;
-            }
-            const tName = document.getElementById('t-name').value;
-            const tFname = document.getElementById('t-fname').value;
-
-            teachersList.push({
-                id: Date.now(), name: tName, fname: tFname, pid: "10" + Math.floor(100000+Math.random()*900000),
-                status: "Approved", assignedClass: "Unassigned", attendance: "Present"
-            });
-            localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
-            renderTeacherTable();
-
-            document.getElementById('teacher-reg-step').classList.add('hidden');
-            document.getElementById('teacher-dashboard').classList.remove('hidden');
-            renderLeavesTable();
-        }
-
-        function renderTeacherTable() {
-            const tbody = document.getElementById('admin-teacher-table');
-            tbody.innerHTML = '';
-            teachersList.forEach(t => {
-                tbody.innerHTML += `
-                    <tr class="border-b hover:bg-slate-50">
-                        <td class="p-2 border font-bold">${t.name}</td>
-                        <td class="p-2 border">${t.fname}</td>
-                        <td class="p-2 border font-mono">${t.pid}</td>
-                        <td class="p-2 border font-bold text-emerald-800">${t.assignedClass}</td>
-                        <td class="p-2 border"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.status === 'Approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${t.status}</span></td>
-                        <td class="p-2 border">
-                            <button onclick="toggleTeacherAttendance(${t.id})" class="px-2 py-0.5 rounded text-[10px] font-bold ${t.attendance === 'Present' ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}">
-                                ${t.attendance}
-                            </button>
-                        </td>
-                        <td class="p-2 border space-x-1">
-                            <button onclick="editAllTeacherInfo(${t.id})" class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-bold">Edit All</button>
-                            <button onclick="deleteTeacher(${t.id})" class="bg-red-700 text-white px-2 py-1 rounded text-[10px] font-bold">Delete</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        function toggleTeacherAttendance(id) {
-            teachersList = teachersList.map(t => {
-                if(t.id === id) t.attendance = (t.attendance === 'Present') ? 'Absent' : 'Present';
-                return t;
-            });
-            localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
-            renderTeacherTable();
-        }
-
-        function editAllTeacherInfo(id) {
-            const t = teachersList.find(item => item.id === id);
-            if (!t) return;
-
-            const name = prompt("Edit Teacher Name:", t.name);
-            const fname = prompt("Edit Father Name:", t.fname);
-            const pid = prompt("Edit PID:", t.pid);
-            const assignedClass = prompt("Edit Assigned Class:", t.assignedClass);
-
-            if (name && fname && pid && assignedClass) {
-                t.name = name; t.fname = fname; t.pid = pid; t.assignedClass = assignedClass;
-                localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
-                renderTeacherTable();
-            }
-        }
-
-        function deleteTeacher(id) {
-            if (confirm("Are you sure you want to delete this teacher?")) {
-                teachersList = teachersList.filter(t => t.id !== id);
-                localStorage.setItem('gbhs_teachers', JSON.stringify(teachersList));
-                renderTeacherTable();
-            }
-        }
-
-        function submitTeacherLeave() {
-            const type = document.getElementById('t-leave-type').value;
-            const date = document.getElementById('t-leave-date').value;
-            const reason = document.getElementById('t-leave-reason').value;
-
-            if(!date || !reason) { alert("Please provide both Date and Reason."); return; }
-
-            leavesList.push({
-                id: Date.now(), teacherName: teachersList[0]?.name || "Teacher", type: type, date: date,
-                reason: reason, status: "Pending", hmStamp: "", remarks: ""
-            });
-            localStorage.setItem('gbhs_leaves', JSON.stringify(leavesList));
-            renderLeavesTable();
-            alert("Leave Request Submitted to Admin.");
-        }
-
-        function renderLeavesTable() {
-            const adminTbody = document.getElementById('admin-leave-tbody');
-            const teacherTbody = document.getElementById('teacher-leave-tbody');
-            
-            if(adminTbody) adminTbody.innerHTML = '';
-            if(teacherTbody) teacherTbody.innerHTML = '';
-
-            leavesList.forEach(l => {
-                if(adminTbody) {
-                    adminTbody.innerHTML += `
-                        <tr class="border-b hover:bg-slate-50">
-                            <td class="p-2 border font-bold">${l.teacherName}</td>
-                            <td class="p-2 border">${l.type}</td>
-                            <td class="p-2 border">${l.date}</td>
-                            <td class="p-2 border">${l.reason}</td>
-                            <td class="p-2 border">
-                                ${l.status === 'Approved' ? `<span class="text-xs text-green-700 font-bold">✓ HM Stamp Uploaded</span>` : `<input type="file" id="stamp-file-${l.id}" class="text-[9px]">`}
-                                ${l.remarks ? `<p class="text-[9px] text-red-600">Remarks: ${l.remarks}</p>` : ''}
-                            </td>
-                            <td class="p-2 border space-x-1">
-                                <button onclick="approveLeave(${l.id})" class="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold">Approve</button>
-                                <button onclick="rejectLeave(${l.id})" class="bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold">Reject</button>
-                                <button onclick="deleteLeave(${l.id})" class="bg-slate-700 text-white px-2 py-1 rounded text-[10px] font-bold">Delete</button>
-                            </td>
-                        </tr>
-                    `;
-                }
-
-                if(teacherTbody) {
-                    teacherTbody.innerHTML += `
-                        <tr class="border-b">
-                            <td class="p-2 border">${l.type}</td>
-                            <td class="p-2 border">${l.date}</td>
-                            <td class="p-2 border">${l.reason}</td>
-                            <td class="p-2 border"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${l.status === 'Approved' ? 'bg-green-100 text-green-800' : l.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${l.status}</span></td>
-                            <td class="p-2 border">
-                                ${l.status === 'Approved' ? '<span class="text-emerald-700 font-bold">Approved with HM Sign & Stamp</span>' : l.status === 'Rejected' ? `<span class="text-red-600 font-bold">Rejected: ${l.remarks}</span>` : 'Awaiting Review'}
-                            </td>
-                        </tr>
-                    `;
-                }
-            });
-        }
-
-        function approveLeave(id) {
-            leavesList = leavesList.map(l => {
-                if(l.id === id) {
-                    l.status = 'Approved';
-                    l.hmStamp = 'Signed & Stamped by Headmaster';
-                    l.remarks = 'Consent Granted';
-                }
-                return l;
-            });
-            localStorage.setItem('gbhs_leaves', JSON.stringify(leavesList));
-            renderLeavesTable();
-        }
-
-        function rejectLeave(id) {
-            const remarks = prompt("Enter rejection remarks:");
-            if(!remarks) return;
-            leavesList = leavesList.map(l => {
-                if(l.id === id) {
-                    l.status = 'Rejected';
-                    l.remarks = remarks;
-                }
-                return l;
-            });
-            localStorage.setItem('gbhs_leaves', JSON.stringify(leavesList));
-            renderLeavesTable();
-        }
-
-        function deleteLeave(id) {
-            if(confirm("Delete this leave record?")) {
-                leavesList = leavesList.filter(l => l.id !== id);
-                localStorage.setItem('gbhs_leaves', JSON.stringify(leavesList));
-                renderLeavesTable();
-            }
         }
     </script>
 </body>
