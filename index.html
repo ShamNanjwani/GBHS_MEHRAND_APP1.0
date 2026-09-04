@@ -14,9 +14,9 @@
     <header class="bg-emerald-800 text-white p-4 shadow-md">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
-                <!-- Fixed Logo Container ensuring any image fits inside -->
-                <div class="w-16 h-16 bg-white rounded-full p-1 border flex items-center justify-center overflow-hidden shrink-0">
-                    <img id="header-logo" src="https://via.placeholder.com/80" alt="School Logo" class="max-w-full max-h-full object-contain">
+                <!-- Circular Logo Container auto-fitting uploaded images -->
+                <div class="w-16 h-16 bg-white rounded-full p-1 border-2 border-yellow-400 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                    <img id="header-logo" src="https://via.placeholder.com/80" alt="School Logo" class="w-full h-full object-contain rounded-full">
                 </div>
                 <div>
                     <h1 class="text-xl md:text-2xl font-bold tracking-wide">GOVERNMENT BOYS HIGH SCHOOL MEHRAND</h1>
@@ -233,7 +233,7 @@
                         <!-- Logo Upload Section (Header Image Only) -->
                         <div class="p-3 border rounded bg-emerald-50 space-y-2">
                             <h4 class="font-bold text-xs text-emerald-900"><i class="fa-solid fa-school mr-1"></i>School Logo Upload</h4>
-                            <p class="text-[10px] text-gray-500">Displays beside school name in Header</p>
+                            <p class="text-[10px] text-gray-500">Auto-fits into circular header section</p>
                             <input type="file" id="edit-logo-file" class="text-[10px] w-full" accept="image/*">
                         </div>
 
@@ -337,7 +337,6 @@
     <footer class="bg-gray-900 text-white py-6 mt-12 border-t border-gray-800">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 text-sm">
             <div class="flex items-center gap-3">
-                <!-- Fixed Designer Avatar Container ensuring any image fits inside -->
                 <div class="w-10 h-10 rounded-full border-2 border-yellow-400 bg-white overflow-hidden flex items-center justify-center shrink-0">
                     <img id="footer-designer-img" src="https://via.placeholder.com/40" alt="Designer Avatar" class="w-full h-full object-cover">
                 </div>
@@ -407,7 +406,6 @@
             document.getElementById('view-hm-msg').innerText = `"${leadershipData.hmMsg}"`;
             document.getElementById('view-hm-img').src = leadershipData.hmImg;
 
-            // Updated Target Bindings
             document.getElementById('header-logo').src = leadershipData.logoImg;
             document.getElementById('footer-designer-name').innerText = leadershipData.designerName;
             document.getElementById('footer-designer-img').src = leadershipData.designerImg;
@@ -430,7 +428,6 @@
             if (hmMsg) leadershipData.hmMsg = hmMsg;
             if (dName) leadershipData.designerName = dName;
 
-            // Handle Image Upload File Readers
             const logoFileInput = document.getElementById('edit-logo-file');
             const designerFileInput = document.getElementById('edit-designer-file');
             const mFileInput = document.getElementById('edit-minister-img');
